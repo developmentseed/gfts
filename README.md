@@ -47,4 +47,4 @@ The system will watch files and execute tasks whenever one of them changes.
 The site will automatically refresh since it is bundled with livereload.
   
 ## Map style
-The map style being used is the `GFTS PC basemap` in the Devseed account. Update it through mapbox studio and publish to change it.
+The map style being used is in the Devseed account. Update it through mapbox studio and publish to change it.

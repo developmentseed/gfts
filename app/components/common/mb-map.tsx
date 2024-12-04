@@ -24,7 +24,7 @@ export default function MbMap() {
           {...viewStateMap}
           mapboxAccessToken={process.env.MAPBOX_TOKEN!}
           onMove={(evt) => setViewState(evt.viewState)}
-          mapStyle='mapbox://styles/devseed/clwj0j1af00hy01pc4n33aq16'
+          mapStyle='mapbox://styles/devseed/cm47tdpmx00e101r159yt4ogi'
         >
           <Source
             type='raster'
