@@ -19,6 +19,7 @@ import Logo from './logo';
 
 const Home = React.lazy(() => import('../home/'));
 const Search = React.lazy(() => import('../search/'));
+const Species = React.lazy(() => import('../species/'));
 
 const MbMap = React.lazy(() => import('./mb-map'));
 
@@ -77,16 +78,17 @@ export default function PageLayout() {
             </List>
           </Box>
         </Flex>
-        <Flex bg='surface.500' borderRadius='md' w='100%' p={4}>
+        <Flex as='main' bg='surface.500' borderRadius='md' w='100%' p={4}>
           <Suspense fallback={<Loading />}>
             <Switch>
               <Route path='/' component={Home} />
+              <Route path='/species/:id' component={Species} />
               <Route path='/search' component={Search} />
             </Switch>
           </Suspense>
         </Flex>
       </Flex>
-      <Box as='main' flex='1'>
+      <Box flex='1'>
         <Suspense fallback={<MapLoading />}>
           <MbMap />
         </Suspense>

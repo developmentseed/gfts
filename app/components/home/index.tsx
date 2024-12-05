@@ -1,9 +1,7 @@
 import React from 'react';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import {
   Badge,
   Box,
-  Flex,
   Heading,
   Image,
   List,
@@ -14,6 +12,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import SmartLink from '$components/common/smart-link';
 import { getJsonFn, SpeciesListed } from '$utils/api';
+import { PanelHeader } from '$components/common/panel-header';
 
 /**
  * Main Page component.
@@ -26,20 +25,10 @@ export default function Component() {
 
   return (
     <Box w='100%'>
-      <Flex
-        direction='column'
-        gap={2}
-        mx={-4}
-        px={4}
-        pb={4}
-        borderBottom='1px'
-        borderBottomColor='base.100a'
-      >
-        <Text as='p' color='base.400'>
-          Explore
-        </Text>
-        <Flex gap={2}>
-          <Heading size='md'>
+      <PanelHeader
+        suptitle='Explore'
+        heading={
+          <>
             Species{' '}
             {isSuccess && (
               <Badge
@@ -51,9 +40,11 @@ export default function Component() {
                 {data?.length.toString().padStart(2, '0')}
               </Badge>
             )}
-          </Heading>
-        </Flex>
-      </Flex>
+          </>
+        }
+        borderBottom='1px'
+        borderBottomColor='base.100a'
+      />
       <List display='flex' flexDirection='column' gap={4} pt={4}>
         {isSuccess
           ? data?.map((species) => (
