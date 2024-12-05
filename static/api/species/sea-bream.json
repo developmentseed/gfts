@@ -1,0 +1,11 @@
+
+{
+  "id": "sea-bream",
+  "name": "Sea Bream",
+  "region": "Mediterranean",
+  "image": "/api/species/seabream.jpg",
+  "coords": [
+    4.8357,
+    39.7640
+  ]
+}

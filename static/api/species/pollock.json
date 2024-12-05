@@ -1,0 +1,11 @@
+
+{
+  "id": "pollock",
+  "name": "Pollock",
+  "region": "Cost of France",
+  "image": "/api/species/pollock.jpg",
+  "coords": [
+    -4.3698,
+    48.2965
+  ]
+}

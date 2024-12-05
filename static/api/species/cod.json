@@ -1,0 +1,11 @@
+
+{
+  "id": "cod",
+  "name": "Cod",
+  "region": "North Sea",
+  "image": "http://picsum.photos/150?v=6",
+  "coords": [
+    1.3522,
+    58.8566
+  ]
+}
