@@ -20,6 +20,7 @@ import Logo from './logo';
 const Home = React.lazy(() => import('../home/'));
 const Search = React.lazy(() => import('../search/'));
 const Species = React.lazy(() => import('../species/'));
+const IndividualSingle = React.lazy(() => import('../individual/'));
 
 const MbMap = React.lazy(() => import('./mb-map'));
 
@@ -83,6 +84,7 @@ export default function PageLayout() {
             <Switch>
               <Route path='/' component={Home} />
               <Route path='/species/:id' component={Species} />
+              <Route path='/individual/:id' component={IndividualSingle} />
               <Route path='/search' component={Search} />
             </Switch>
           </Suspense>

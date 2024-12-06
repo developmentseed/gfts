@@ -16,6 +16,11 @@ export interface Species {
   coords: [number, number];
 }
 
+export interface IndividualListed {
+  id: string;
+  species: string;
+}
+
 export function getJsonFn(url) {
   return async () => {
     const response = await fetch(`${process.env.DATA_API || ''}${url}`);
