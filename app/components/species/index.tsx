@@ -17,6 +17,7 @@ import { PanelHeader } from '$components/common/panel-header';
 import { getJsonFn, Species } from '$utils/api';
 import { LegendBar } from '$components/common/legend-bar';
 import { DataSectionHead } from '$components/common/data-section-head';
+import { RouteErrorHandler } from '$components/common/error';
 
 interface SpeciesComponentProps {
   params: {
@@ -32,10 +33,14 @@ export default function Component(props: SpeciesComponentProps) {
     params: { id }
   } = props;
 
-  const { data, isSuccess } = useQuery<Species>({
+  const { data, isSuccess, error } = useQuery<Species>({
     queryKey: ['species', id],
     queryFn: getJsonFn(`/api/species/${id}.json`)
   });
+
+  if (error) {
+    return <RouteErrorHandler error={error} />;
+  }
 
   return (
     <Box w='100%'>
