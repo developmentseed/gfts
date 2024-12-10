@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
+  Button,
   Flex,
   Skeleton,
   Tab,
@@ -21,6 +22,9 @@ import { LegendBar } from '$components/common/legend-bar';
 import { DataSectionHead } from '$components/common/data-section-head';
 import { RouteErrorHandler } from '$components/common/error';
 import { NotFound } from '$components/common/error/not-found';
+import { useIndividualContext } from '$components/common/app-context';
+import { changeValue } from '$utils/format';
+import { useRafEffect } from '$utils/use-raf-effect-hook';
 
 interface SpeciesComponentProps {
   params: {
@@ -35,6 +39,9 @@ export default function Component(props: SpeciesComponentProps) {
   const {
     params: { id }
   } = props;
+
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const { currentPDFIndex, setCurrentPDFIndex } = useIndividualContext();
 
   const { data, isSuccess, error } = useQuery<
     IndividualListed[],
@@ -54,17 +61,31 @@ export default function Component(props: SpeciesComponentProps) {
     }
   });
 
-  const { data: parquetData, isFetching: isParquetFetching, error: parquetError } = useQuery({
+  const {
+    data: rawParquetData,
+    isFetching: isParquetFetching,
+    error: parquetError
+  } = useQuery({
     enabled: !!data,
     queryKey: ['individual', id, 'parquet'],
     queryFn: requestIndividualParquetFn(id)
   });
-  console.log('isParquetFetching', isParquetFetching);
-  console.log('parquetData', parquetData);
-  console.log('parquetError', parquetError);
 
-  if (error) {
-    return <RouteErrorHandler error={error} />;
+  const dataLength = Object.keys(rawParquetData || {}).length;
+
+  useRafEffect(
+    () => {
+      setCurrentPDFIndex((currentPDFIndex) => {
+        return changeValue(currentPDFIndex, dataLength - 1, 1);
+      });
+    },
+    30,
+    isAnimating,
+    [dataLength, setCurrentPDFIndex]
+  );
+
+  if (error || parquetError) {
+    return <RouteErrorHandler error={(error || parquetError)!} />;
   }
 
   return (
@@ -95,6 +116,23 @@ export default function Component(props: SpeciesComponentProps) {
           )
         }
       />
+
+      <Button
+        disabled={isParquetFetching}
+        onClick={() => setIsAnimating((isAnimating) => !isAnimating)}
+        onWheel={(e) => {
+          setCurrentPDFIndex((currentPDFIndex) => {
+            return changeValue(
+              currentPDFIndex,
+              dataLength - 1,
+              e.deltaY < 0 ? -1 : 1
+            );
+          });
+        }}
+      >
+        {isAnimating ? 'Stop' : 'Play'} ({currentPDFIndex})
+      </Button>
+
       <Tabs size='sm' colorScheme='base' mx={-4}>
         <TabList>
           <Tab fontWeight='bold'>Visualize</Tab>
@@ -114,13 +152,13 @@ export default function Component(props: SpeciesComponentProps) {
   );
 }
 
-function LocationProbability(props) {
+function LocationProbability() {
   return (
     <Flex direction='column' gap={4}>
       <DataSectionHead
         title='Location Probability'
         unit='%'
-        onToggle={console.log}
+        // onToggle={console.log}
       />
       <LegendBar
         stops={[

@@ -135,9 +135,9 @@ export function formatAsScientificNotation(num: number, decimals = 2) {
   if (!isFinite(num)) return `${Math.sign(num) === -1 ? '-' : ''}∞`;
 
   const [coefficient, exponent] = num
-  .toExponential()
-  .split('e')
-  .map((item) => Number(item));
+    .toExponential()
+    .split('e')
+    .map((item) => Number(item));
 
   const sups = '⁰¹²³⁴⁵⁶⁷⁸⁹';
   const exponentSup = Math.abs(exponent)
@@ -145,8 +145,8 @@ export function formatAsScientificNotation(num: number, decimals = 2) {
     .split('')
     .map((v) => sups[v])
     .join('');
-  
-  const sign = exponent < 0 ? '⁻':'';
+
+  const sign = exponent < 0 ? '⁻' : '';
 
   return `${round(coefficient, decimals)}x10${sign}${exponentSup}`;
 }
@@ -160,4 +160,37 @@ export function formatAsScientificNotation(num: number, decimals = 2) {
  */
 export function clamp(num: number, min: number, max: number) {
   return Math.min(Math.max(num, min), max);
+}
+
+/**
+ * Changes the given value by a specified amount within a given range.
+ *
+ * @param value - The initial value to be changed.
+ * @param range - The range within which the value should be changed. It can be
+ * a tuple representing [min, max] or a single number representing the max value
+ * with min assumed to be 0.
+ * @param amount - The amount by which the value should be changed.
+ * @returns The new value after applying the change, wrapped within the
+ * specified range.
+ */
+export function changeValue(
+  value: number,
+  range: [number, number] | number,
+  amount: number
+) {
+  if (typeof range === 'number') {
+    range = [0, range];
+  }
+
+  const [min, max] = range;
+  const realChange = amount % (max - min + 1);
+  const newValue = value + realChange;
+
+  if (newValue > max) {
+    return min + (newValue - max - 1);
+  } else if (newValue < min) {
+    return max - (min - newValue - 1);
+  }
+
+  return newValue;
 }

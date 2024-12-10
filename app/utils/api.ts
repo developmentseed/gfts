@@ -21,6 +21,13 @@ export interface IndividualListed {
   species: string;
 }
 
+export interface IndividualParquetItem {
+  value: number;
+  date: Date;
+  longitude: number;
+  latitude: number;
+}
+
 export function getJsonFn(url) {
   return async () => {
     const response = await fetch(`${process.env.DATA_API || ''}${url}`);

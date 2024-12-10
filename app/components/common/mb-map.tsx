@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Layer, Marker, Map as ReactMap, Source } from 'react-map-gl';
+import { Layer, Map as ReactMap, Source } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { chakra, Box, Heading, Image, Text, Flex } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { Route } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
 
 import SmartLink from './smart-link';
-
-import { getJsonFn, SpeciesListed } from '$utils/api';
+import { IndividualLine, IndividualPDF } from '$components/individual/map-data';
 
 export default function MbMap() {
   const [viewStateMap, setViewState] = useState({
@@ -43,12 +41,16 @@ export default function MbMap() {
           <Route path='/'>
             <HomeMakers />
           </Route>
+
+          <Route path='/individual/:id'>
+            <IndividualPDF />
+            <IndividualLine />
+          </Route>
         </ReactMap>
       </Box>
     </Box>
   );
 }
-
 function HomeMakers() {
   const { data, isSuccess } = useQuery<SpeciesListed[]>({
     queryKey: ['species'],
