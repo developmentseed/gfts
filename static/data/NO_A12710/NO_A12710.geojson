@@ -1,0 +1,31 @@
+{
+"type": "FeatureCollection",
+"name": "0ff4555e3b914b4cb136870b4df73fdd",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"xy_coordinate_resolution": 1e-07,
+"features": [
+{ "type": "Feature", "properties": { "time": "2016-09-04T00:00:00", "temperature": 17.657, "pressure": 7.8587, "temperature_std": 0.20978, "pressure_std": 1.3055 }, "geometry": { "type": "Point", "coordinates": [ -2.3111535, 47.1245343 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-05T00:00:00", "temperature": 17.608, "pressure": 7.645, "temperature_std": 0.16742, "pressure_std": 1.0397 }, "geometry": { "type": "Point", "coordinates": [ -2.36713, 47.0999928 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-06T00:00:00", "temperature": 17.53, "pressure": 7.6286, "temperature_std": 0.1212, "pressure_std": 0.83385 }, "geometry": { "type": "Point", "coordinates": [ -2.4073569, 47.0877212 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-07T00:00:00", "temperature": 17.572, "pressure": 7.6355, "temperature_std": 0.088788, "pressure_std": 0.89802 }, "geometry": { "type": "Point", "coordinates": [ -2.4161897, 47.0999928 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-08T00:00:00", "temperature": 18.845, "pressure": 4.9975, "temperature_std": 0.88598, "pressure_std": 2.7107 }, "geometry": { "type": "Point", "coordinates": [ -2.4004907, 47.1122638 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-09T00:00:00", "temperature": 20.352, "pressure": 1.5121, "temperature_std": 0.60725, "pressure_std": 1.5362 }, "geometry": { "type": "Point", "coordinates": [ -2.393617, 47.1368043 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-10T00:00:00", "temperature": 20.861, "pressure": 0.75592, "temperature_std": 0.22687, "pressure_std": 0.60049 }, "geometry": { "type": "Point", "coordinates": [ -2.3867358, 47.1613427 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-11T00:00:00", "temperature": 20.901, "pressure": 0.52128, "temperature_std": 0.2746, "pressure_std": 0.727 }, "geometry": { "type": "Point", "coordinates": [ -2.3867358, 47.1613427 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-12T00:00:00", "temperature": 20.408, "pressure": 0.65233, "temperature_std": 0.46113, "pressure_std": 0.94172 }, "geometry": { "type": "Point", "coordinates": [ -2.3867358, 47.1613427 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-13T00:00:00", "temperature": 19.419, "pressure": 1.8743, "temperature_std": 0.39674, "pressure_std": 1.6068 }, "geometry": { "type": "Point", "coordinates": [ -2.3867358, 47.1613427 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-14T00:00:00", "temperature": 19.406, "pressure": 3.6283, "temperature_std": 0.29453, "pressure_std": 1.7388 }, "geometry": { "type": "Point", "coordinates": [ -2.3867358, 47.1613427 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-15T00:00:00", "temperature": 19.532, "pressure": 3.4108, "temperature_std": 0.33876, "pressure_std": 1.7438 }, "geometry": { "type": "Point", "coordinates": [ -2.3867358, 47.1613427 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-16T00:00:00", "temperature": 19.404, "pressure": 2.6424, "temperature_std": 0.35555, "pressure_std": 1.4238 }, "geometry": { "type": "Point", "coordinates": [ -2.3867358, 47.1613427 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-17T00:00:00", "temperature": 19.096, "pressure": 2.7734, "temperature_std": 0.35692, "pressure_std": 1.4958 }, "geometry": { "type": "Point", "coordinates": [ -2.4024557, 47.1490738 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-18T00:00:00", "temperature": 18.966, "pressure": 2.8226, "temperature_std": 0.44473, "pressure_std": 1.4814 }, "geometry": { "type": "Point", "coordinates": [ -2.4024557, 47.1490738 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-19T00:00:00", "temperature": 18.63, "pressure": 3.4744, "temperature_std": 0.17809, "pressure_std": 1.2776 }, "geometry": { "type": "Point", "coordinates": [ -2.393617, 47.1368043 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-20T00:00:00", "temperature": 18.478, "pressure": 4.5838, "temperature_std": 0.15359, "pressure_std": 1.7485 }, "geometry": { "type": "Point", "coordinates": [ -2.4093264, 47.1245343 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-21T00:00:00", "temperature": 18.295, "pressure": 7.8401, "temperature_std": 0.088721, "pressure_std": 1.6911 }, "geometry": { "type": "Point", "coordinates": [ -2.4093264, 47.1245343 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-22T00:00:00", "temperature": 18.179, "pressure": 7.6216, "temperature_std": 0.076265, "pressure_std": 0.95456 }, "geometry": { "type": "Point", "coordinates": [ -2.4093264, 47.1245343 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-23T00:00:00", "temperature": 18.088, "pressure": 7.6659, "temperature_std": 0.09385, "pressure_std": 0.78887 }, "geometry": { "type": "Point", "coordinates": [ -2.4004907, 47.1122638 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-24T00:00:00", "temperature": 18.003, "pressure": 7.6717, "temperature_std": 0.1031, "pressure_std": 0.63686 }, "geometry": { "type": "Point", "coordinates": [ -2.3847832, 47.1245343 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-25T00:00:00", "temperature": 17.997, "pressure": 8.3379, "temperature_std": 0.085596, "pressure_std": 1.1054 }, "geometry": { "type": "Point", "coordinates": [ -2.3445172, 47.1368043 ] } },
+{ "type": "Feature", "properties": { "time": "2016-09-26T00:00:00", "temperature": 5.9821, "pressure": 3.1861, "temperature_std": 9.7975, "pressure_std": 3.5351 }, "geometry": { "type": "Point", "coordinates": [ -2.2884825, 47.1613427 ] } }
+]
+}
