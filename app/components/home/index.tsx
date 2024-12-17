@@ -60,7 +60,7 @@ export default function Component() {
                   borderRadius='md'
                 >
                   <Image
-                    src={species.image}
+                    src={`${process.env.DATA_API}${species.image}`}
                     alt='Species'
                     borderRadius='md'
                     width={16}
