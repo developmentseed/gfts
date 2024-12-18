@@ -32,7 +32,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 100;
+      z-index: 9999;
       background: #fff;
       margin: 0;
       padding: 1rem;
@@ -43,7 +43,15 @@
     }
 
     #welcome-banner h1 {
-      height: 3rem;
+      display: flex;
+      justify-content: center;
+      height: 5rem;
+      margin-bottom: 1rem;
+    }
+
+    #welcome-banner img {
+      width: auto;
+      height: auto;
     }
 
     #welcome-banner.dismissed {

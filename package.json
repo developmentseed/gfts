@@ -52,6 +52,7 @@
     "jest-css-modules-transform": "^4.4.2",
     "jest-environment-jsdom": "^29.7.0",
     "parcel": "^2.11.0",
+    "parcel-resolver-ignore": "^2.2.0",
     "portscanner": "^2.2.0",
     "posthtml-expressions": "^1.11.3",
     "prettier": "^3.2.4",

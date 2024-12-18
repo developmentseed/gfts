@@ -26,8 +26,10 @@ function Root() {
     // Hide the welcome banner.
     const banner = document.querySelector('#welcome-banner');
     if (!banner) return;
-    banner.classList.add('dismissed');
-    setTimeout(() => banner.remove(), 500);
+    setTimeout(() => {
+      banner.classList.add('dismissed');
+      setTimeout(() => banner.remove(), 500);
+    }, 500);
   }, []);
 
   return (

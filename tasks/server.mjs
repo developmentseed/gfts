@@ -68,7 +68,8 @@ async function parcelServe() {
     defaultConfig: `${__appRoot}/.parcelrc`,
     cacheDir: `${__appRoot}/.parcel-cache`,
     defaultTargetOptions: {
-      distDir: `${__appRoot}/dist`
+      distDir: `${__appRoot}/dist`,
+      publicUrl: process.env.PUBLIC_URL || '/'
     },
     shouldAutoInstall: false,
     additionalReporters: [

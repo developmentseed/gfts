@@ -10,9 +10,11 @@ import {
   Text
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
+
 import SmartLink from '$components/common/smart-link';
 import { getJsonFn, SpeciesListed } from '$utils/api';
 import { PanelHeader } from '$components/common/panel-header';
+import { buildImgUrl } from '$utils/utils';
 
 /**
  * Main Page component.
@@ -60,7 +62,7 @@ export default function Component() {
                   borderRadius='md'
                 >
                   <Image
-                    src={`${process.env.DATA_API}${species.image}`}
+                    src={buildImgUrl(species.image)}
                     alt='Species'
                     borderRadius='md'
                     width={16}

@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getJsonFn, SpeciesListed } from '$utils/api';
 import SmartLink from '$components/common/smart-link';
+import { buildImgUrl } from '$utils/utils';
 
 export function HomeMakers() {
   const { data, isSuccess } = useQuery<SpeciesListed[]>({
@@ -35,7 +36,7 @@ export function HomeMakers() {
             boxShadow='md'
           >
             <Image
-              src={species.image}
+              src={buildImgUrl(species.image)}
               alt='Species'
               borderRadius='md'
               width={16}
