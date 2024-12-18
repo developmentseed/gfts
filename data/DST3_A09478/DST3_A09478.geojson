@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "e04a06adffa347378e59f5ba2ab0d823",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"xy_coordinate_resolution": 1e-07,
+"features": [
+{ "type": "Feature", "properties": { "time": "2012-09-22T00:00:00", "temperature": 14.277, "pressure": 1.0315, "temperature_std": 0.13065, "pressure_std": 0.27646 }, "geometry": { "type": "Point", "coordinates": [ -5.1167042, 48.4834007 ] } },
+{ "type": "Feature", "properties": { "time": "2012-09-23T00:00:00", "temperature": 14.385, "pressure": 1.0273, "temperature_std": 0.17074, "pressure_std": 0.53157 }, "geometry": { "type": "Point", "coordinates": [ -5.1415228, 48.7641981 ] } },
+{ "type": "Feature", "properties": { "time": "2012-09-24T00:00:00", "temperature": 14.294, "pressure": 1.0985, "temperature_std": 0.088692, "pressure_std": 0.48923 }, "geometry": { "type": "Point", "coordinates": [ -5.1813545, 48.813006 ] } },
+{ "type": "Feature", "properties": { "time": "2012-09-25T00:00:00", "temperature": 14.175, "pressure": 30.641, "temperature_std": 0.11016, "pressure_std": 25.108 }, "geometry": { "type": "Point", "coordinates": [ -5.1558515, 48.813006 ] } }
+]
+}

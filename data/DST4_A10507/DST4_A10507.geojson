@@ -1,0 +1,17 @@
+{
+"type": "FeatureCollection",
+"name": "38dbed4e3b9743d188339f64b90ea15e",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"xy_coordinate_resolution": 1e-07,
+"features": [
+{ "type": "Feature", "properties": { "time": "2017-11-17T00:00:00", "temperature": 13.663, "pressure": 42.786, "temperature_std": 0.034842, "pressure_std": 2.6845 }, "geometry": { "type": "Point", "coordinates": [ -4.9498747, 48.0555986 ] } },
+{ "type": "Feature", "properties": { "time": "2017-11-18T00:00:00", "temperature": 13.657, "pressure": 44.523, "temperature_std": 0.033622, "pressure_std": 1.4381 }, "geometry": { "type": "Point", "coordinates": [ -4.9498747, 48.0555986 ] } },
+{ "type": "Feature", "properties": { "time": "2017-11-19T00:00:00", "temperature": 13.603, "pressure": 44.701, "temperature_std": 0.041832, "pressure_std": 1.5536 }, "geometry": { "type": "Point", "coordinates": [ -4.9498747, 48.0555986 ] } },
+{ "type": "Feature", "properties": { "time": "2017-11-20T00:00:00", "temperature": 13.547, "pressure": 44.764, "temperature_std": 0.020208, "pressure_std": 1.5082 }, "geometry": { "type": "Point", "coordinates": [ -4.9498747, 48.0555986 ] } },
+{ "type": "Feature", "properties": { "time": "2017-11-21T00:00:00", "temperature": 13.508, "pressure": 44.945, "temperature_std": 0.024229, "pressure_std": 1.4225 }, "geometry": { "type": "Point", "coordinates": [ -4.9498747, 48.0555986 ] } },
+{ "type": "Feature", "properties": { "time": "2017-11-22T00:00:00", "temperature": 13.469, "pressure": 45.522, "temperature_std": 0.021347, "pressure_std": 1.3171 }, "geometry": { "type": "Point", "coordinates": [ -4.9498747, 48.0555986 ] } },
+{ "type": "Feature", "properties": { "time": "2017-11-23T00:00:00", "temperature": 13.424, "pressure": 46.01, "temperature_std": 0.038996, "pressure_std": 1.2196 }, "geometry": { "type": "Point", "coordinates": [ -4.9498747, 48.0555986 ] } },
+{ "type": "Feature", "properties": { "time": "2017-11-24T00:00:00", "temperature": 13.356, "pressure": 46.874, "temperature_std": 0.05109, "pressure_std": 1.3275 }, "geometry": { "type": "Point", "coordinates": [ -4.9498747, 48.0555986 ] } },
+{ "type": "Feature", "properties": { "time": "2017-11-25T00:00:00", "temperature": 13.198, "pressure": 6.579, "temperature_std": 0.10054, "pressure_std": 13.158 }, "geometry": { "type": "Point", "coordinates": [ -4.9498747, 48.0555986 ] } }
+]
+}
