@@ -88,6 +88,7 @@
     "react-cool-dimensions": "^3.0.1",
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.1.7",
+    "threads": "^1.7.0",
     "wouter": "^3.3.5"
   },
   "parcelIgnore": [
@@ -97,7 +98,10 @@
     "$components": "~/app/components",
     "$styles": "~/app/styles",
     "$utils": "~/app/utils",
-    "$test": "~/test"
+    "$test": "~/test",
+    "threads/register": "threads/register",
+    "threads/worker": "~/app/threads-worker-fix.js",
+    "threads": "~/app/threads-fix.js"
   },
   "@parcel/resolver-default": {
     "packageExports": true
