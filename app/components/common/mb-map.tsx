@@ -3,15 +3,15 @@ import { Layer, Map as ReactMap, Source } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Box } from '@chakra-ui/react';
 import { Route } from 'wouter';
-
 import { HomeMakers } from '$components/home/map-data';
 import { IndividualLine, IndividualPDF } from '$components/individual/map-data';
+import { SpeciesPDF } from '$components/species/map-data';
 
 export default function MbMap() {
   const [viewStateMap, setViewState] = useState({
-    longitude: -3.4742,
-    latitude: 46.64983,
-    zoom: 6,
+    longitude: -30.4742,
+    latitude: 40.64983,
+    zoom: 4,
     pitch: 0
   });
 
@@ -45,6 +45,10 @@ export default function MbMap() {
           <Route path='/individual/:id'>
             <IndividualPDF />
             <IndividualLine />
+          </Route>
+
+          <Route path='/species/:id'>
+            <SpeciesPDF />
           </Route>
         </ReactMap>
       </Box>

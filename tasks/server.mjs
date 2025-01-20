@@ -71,7 +71,7 @@ async function parcelServe() {
       distDir: `${__appRoot}/dist`,
       publicUrl: process.env.PUBLIC_URL || '/'
     },
-    shouldAutoInstall: false,
+    shouldAutoInstall: true,
     additionalReporters: [
       {
         packageName: '@parcel/reporter-cli',

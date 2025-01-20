@@ -65,8 +65,8 @@ export default function PageLayout() {
           >
             <Flex py={4} px={2} direction='column' gap={6} as='header'>
               <Flex direction='column' alignItems='center'>
-                <SmartLink to='/'>
-                  <Logo h={4} w='auto' />
+                <SmartLink to='/' w={8}>
+                  <Logo w='100%' h='auto' />
                 </SmartLink>
               </Flex>
               <Box as='nav'>

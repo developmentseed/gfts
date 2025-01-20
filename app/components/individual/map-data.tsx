@@ -3,8 +3,7 @@ import { useParams } from 'wouter';
 import { useToken } from '@chakra-ui/react';
 import { PointCloudLayer } from '@deck.gl/layers';
 import { useQuery } from '@tanstack/react-query';
-import { Layer, Source, useControl } from 'react-map-gl';
-import { MapboxOverlay } from '@deck.gl/mapbox/dist/es5/index.js';
+import { Layer, Source } from 'react-map-gl';
 import { Feature, FeatureCollection, LineString, Point } from 'geojson';
 
 import compassUrl from './compass.png';
@@ -13,15 +12,7 @@ import { requestIndividualParquetFn, useIndividualPDF } from './data';
 import { useIndividualContext } from '$components/common/app-context';
 import { getJsonFn } from '$utils/api';
 import { useMapImage } from '$utils/use-map-image-hook';
-
-/**
- * Component to add deck GL overlay to the map.
- */
-function DeckGLOverlay(props) {
-  const overlay = useControl<MapboxOverlay>(() => new MapboxOverlay(props));
-  overlay.setProps(props);
-  return null;
-}
+import { DeckGLOverlay } from '$components/common/deckgl-overlay';
 
 export function IndividualPDF() {
   const { id } = useParams<{ id: string }>();

@@ -8,7 +8,7 @@ export default function Logo(props: ChakraProps) {
     <chakra.svg
       width='128px'
       height='80px'
-      viewBox='0 0 128 80'
+      viewBox='0 0 128 128'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       {...props}
