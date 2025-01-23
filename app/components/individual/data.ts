@@ -1,8 +1,17 @@
 import { useMemo } from 'react';
 import parquet from '@dsnp/parquetjs/dist/browser/parquet.cjs.js';
 import { scaleSequential, interpolateViridis, scaleLinear, extent } from 'd3';
+import { spawn } from 'threads';
+import { Feature, LineString } from 'geojson';
 
 import { IndividualParquetItem } from '$utils/api';
+import {
+  HealpixArrowData,
+  HealpixArrowMostProbData,
+  HealpixWorker,
+  makeHealpixArrowTable
+} from '$utils/data/healpix';
+import { arrowMap, arrowReduce } from '$utils/data/arrow';
 
 export interface IndividualPDFPoint {
   position: number[];
@@ -40,6 +49,60 @@ export function requestIndividualParquetFn(id: string) {
       });
     }
     return data;
+  };
+}
+
+export function requestIndividualArrowFn(id: string) {
+  return async () => {
+    const url = `${process.env.DATA_API}/data/${id}/${id}_healpix.parquet`;
+    const nside = 4096;
+
+    const healpixWorker = await spawn<HealpixWorker>(
+      new Worker(
+        // @ts-expect-error - This is a dynamic import.
+        new URL('../../utils/data/healpix-arrow.worker.ts', import.meta.url),
+        {
+          type: 'module'
+        }
+      )
+    );
+
+    const healpixData = await healpixWorker(url, nside);
+    const arrowTable = makeHealpixArrowTable<HealpixArrowData>(
+      healpixData.data
+    );
+
+    const mostProbableTable = makeHealpixArrowTable<HealpixArrowMostProbData>(
+      healpixData.mostProbData
+    );
+
+    const dates = arrowReduce<Set<number>, 'date'>(
+      arrowTable,
+      'date',
+      (acc, row) => acc.add(row.date),
+      new Set()
+    );
+
+    const line = arrowMap<number[], 'geometry'>(
+      mostProbableTable,
+      'geometry',
+      (row) => {
+        return Array.from(row.geometry.toArray());
+      }
+    );
+
+    return {
+      table: arrowTable,
+      dates: Array.from(dates),
+      line: {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'LineString',
+          coordinates: line
+        }
+      } as Feature<LineString>
+    };
   };
 }
 

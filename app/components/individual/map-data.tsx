@@ -1,16 +1,15 @@
 import React, { useMemo } from 'react';
 import { useParams } from 'wouter';
 import { useToken } from '@chakra-ui/react';
-import { PointCloudLayer } from '@deck.gl/layers';
 import { useQuery } from '@tanstack/react-query';
 import { Layer, Source } from 'react-map-gl';
-import { Feature, FeatureCollection, LineString, Point } from 'geojson';
+import { GeoArrowSolidPolygonLayer } from '@geoarrow/deck.gl-layers';
+import { DataFilterExtension } from '@deck.gl/extensions';
 
 import compassUrl from './compass.png';
 
-import { requestIndividualParquetFn, useIndividualPDF } from './data';
+import { requestIndividualArrowFn } from './data';
 import { useIndividualContext } from '$components/common/app-context';
-import { getJsonFn } from '$utils/api';
 import { useMapImage } from '$utils/use-map-image-hook';
 import { DeckGLOverlay } from '$components/common/deckgl-overlay';
 
@@ -18,31 +17,35 @@ export function IndividualPDF() {
   const { id } = useParams<{ id: string }>();
   const { currentPDFIndex } = useIndividualContext();
 
-  const { data: rawParquetData } = useQuery({
+  const { data: rawArrowData } = useQuery({
     enabled: !!id,
-    queryKey: ['individual', id, 'parquet'],
-    queryFn: requestIndividualParquetFn(id)
+    queryKey: ['individual', id, 'arrow'],
+    queryFn: requestIndividualArrowFn(id)
   });
 
-  const individualPDF = useIndividualPDF(rawParquetData, [0, 0.25], 0.8);
+  const deckGlLayers = useMemo(() => {
+    if (!rawArrowData?.table || !rawArrowData?.dates) {
+      return [];
+    }
 
-  const deckGlLayers = useMemo(
-    () =>
-      individualPDF.map(
-        (tsData, i) =>
-          new PointCloudLayer({
-            visible: currentPDFIndex === i,
-            id: `point-${tsData[0].date.getTime()}`,
-            data: tsData,
-            getNormal: [0, 1, 0],
-            getColor: (d) => d.color,
-            getPosition: (d) => d.position,
-            pointSize: 18e-3,
-            sizeUnits: 'common'
-          })
-      ),
-    [individualPDF, currentPDFIndex]
-  );
+    const dateMillis = rawArrowData.dates[currentPDFIndex];
+    return [
+      new GeoArrowSolidPolygonLayer({
+        id: 'geoarrow-polygons',
+        data: rawArrowData.table,
+        // @ts-expect-error is not assignable to type 'undefined'
+        getPolygon: rawArrowData.table.getChild('geometry')!,
+        _normalize: false,
+        getFillColor: rawArrowData.table.getChild('color')!,
+
+        getFilterValue: (_, { index, data }) => {
+          return data.data.getChild('date')!.get(index);
+        },
+        filterRange: [dateMillis, dateMillis + 1],
+        extensions: [new DataFilterExtension()]
+      })
+    ];
+  }, [rawArrowData, currentPDFIndex]);
 
   return <DeckGLOverlay layers={deckGlLayers} />;
 }
@@ -59,28 +62,14 @@ export function IndividualLine() {
     name: 'compass'
   });
 
-  const { data } = useQuery<
-    FeatureCollection<Point>,
-    Error,
-    Feature<LineString>
-  >({
+  const { data } = useQuery({
     enabled: !!id,
-    queryKey: ['individual', id, 'geojson'],
-    queryFn: getJsonFn(`/data/${id}/${id}.geojson`),
-    select: (data) => ({
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'LineString',
-        coordinates: data.features.map(
-          (feature) => feature.geometry.coordinates
-        )
-      }
-    })
+    queryKey: ['individual', id, 'arrow'],
+    queryFn: requestIndividualArrowFn(id)
   });
 
-  return (
-    <Source type='geojson' data={data}>
+  return data?.line ? (
+    <Source type='geojson' data={data.line}>
       <Layer
         type='line'
         id='individual-line'
@@ -103,5 +92,5 @@ export function IndividualLine() {
         }}
       />
     </Source>
-  );
+  ) : null;
 }

@@ -1,28 +1,42 @@
-import { corners_nest, vec2ang } from '@hscmap/healpix';
+import { worker } from '@geoarrow/geoarrow-js';
+import { corners_nest, vec2ang, pix2ang_nest } from '@hscmap/healpix';
 import {
-  Field,
+  Data,
+  DateMillisecond,
   FixedSizeList,
   Float32,
+  Float64,
   List,
-  makeData,
   RecordBatch,
   Schema,
   Struct,
   Table,
+  TypeMap,
   Uint8
 } from 'apache-arrow';
 
 export type HealpixWorkerData = {
-  coords: Float32Array;
-  ringOffset: Uint32Array;
-  polygonOffset: Uint32Array;
-  colors: Uint8Array;
+  data: object;
+  mostProbData: object;
 };
 
 export type HealpixWorker = (
   url: string,
   nside: number
 ) => Promise<HealpixWorkerData>;
+
+export type HealpixArrowData = {
+  date: DateMillisecond;
+  geometry: List<List<FixedSizeList<Float32>>>;
+  value: Float32;
+  color: FixedSizeList<Uint8>;
+};
+
+export type HealpixArrowMostProbData = HealpixArrowData & {
+  geometry: FixedSizeList<Float32>;
+  pressure: Float64;
+  temperature: Float64;
+};
 
 /**
  * Converts radians to degrees.
@@ -80,57 +94,32 @@ export function healpixId2PolygonCoordinates(
 }
 
 /**
+ * Converts a HEALPix ID to a points's coordinates in latitude and longitude.
+ * @param id - The HEALPix ID.
+ * @param nside - The nside parameter of the HEALPix grid.
+ * @returns An array of coordinates representing the point.
+ */
+export function healpixId2CenterPoint(
+  id: number | string,
+  nside: number
+): number[] {
+  const ipix = Number(id);
+
+  // pix2ang_nest returns the theta and phi angles for the point.
+  //   theta is the polar angle (angle from the z-axis) in the range [0, pi].
+  //   phi is the azimuthal angle (angle from the x-axis) in the range [-pi, pi].
+  // Finally, we convert these spherical coordinates to latitude and longitude.
+  return sphericalToLatLon(pix2ang_nest(nside, ipix));
+}
+
+/**
  * Creates an Apache Arrow table from the given columns.
  * @param columns - An object where keys are column names and values are Arrow
  * Data objects.
  * @returns An Apache Arrow Table.
  */
-export function makeHealpixArrowTable(data: HealpixWorkerData) {
-  // Arrow:: Create geometry
-  const coords = makeData({
-    type: new Float32(),
-    data: data.coords
-  });
-  const vertices = makeData({
-    type: new FixedSizeList(2, new Field('xy', coords.type, false)),
-    child: coords
-  });
-  const rings = makeData({
-    type: new List(new Field('vertices', vertices.type, false)),
-    valueOffsets: data.ringOffset,
-    child: vertices
-  });
-  const polygons = makeData({
-    type: new List(new Field('rings', rings.type, false)),
-    valueOffsets: data.polygonOffset,
-    child: rings
-  });
-
-  // Arrow:: Create colors
-  const colorChannels = makeData({
-    type: new Uint8(),
-    data: data.colors
-  });
-
-  const colors = makeData({
-    type: new FixedSizeList(4, new Field('rgba', colorChannels.type, false)),
-    child: colorChannels
-  });
-
-  const schema = new Schema([
-    new Field('geometry', polygons.type),
-    new Field('colors', colors.type)
-  ]);
-
-  const structData = makeData({
-    type: new Struct(schema.fields),
-    children: [polygons, colors]
-  });
-
-  const batch = new RecordBatch(schema, structData);
-
-  return new Table<{
-    geometry: List;
-    colors: FixedSizeList<Uint8>;
-  }>(batch);
+export function makeHealpixArrowTable<T extends TypeMap>(data) {
+  const struct = worker.rehydrateData(data) as unknown as Data<Struct<any>>;
+  const batch = new RecordBatch(new Schema(struct.type.children), struct);
+  return new Table<T>(batch);
 }

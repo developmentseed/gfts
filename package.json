@@ -70,6 +70,8 @@
   "dependencies": {
     "@chakra-ui/react": "^2.9.3",
     "@deck.gl/core": "^9.0.0",
+    "@deck.gl/extensions": "^9.0.40",
+    "@deck.gl/geo-layers": "^9.0.40",
     "@deck.gl/mapbox": "^9.0.0",
     "@devseed-ui/collecticons-chakra": "^3.0.3",
     "@dsnp/parquetjs": "^1.8.5",
@@ -82,7 +84,7 @@
     "@types/d3": "^7.4.3",
     "@types/geojson": "^7946.0.14",
     "@types/mapbox-gl": "^2.7.20",
-    "apache-arrow": "^15",
+    "apache-arrow": "18",
     "axios": "^1.6.7",
     "chakra-react-select": "^5.0.2",
     "d3": "^7.9.0",
@@ -108,7 +110,10 @@
     "$test": "~/test",
     "threads/register": "threads/register",
     "threads/worker": "~/app/threads-worker-fix.js",
-    "threads": "~/app/threads-fix.js"
+    "threads": "~/app/threads-fix.js",
+    "apache-arrow/util/buffer": "./node_modules/apache-arrow/util/buffer.mjs",
+    "apache-arrow/*": "./node_modules/apache-arrow/*",
+    "apache-arrow": "./node_modules/apache-arrow/Arrow.dom.mjs"
   },
   "@parcel/resolver-default": {
     "packageExports": true

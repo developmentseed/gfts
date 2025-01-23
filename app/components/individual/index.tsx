@@ -13,7 +13,7 @@ import {
 import { CollecticonChevronLeftSmall } from '@devseed-ui/collecticons-chakra';
 import { useQuery } from '@tanstack/react-query';
 
-import { requestIndividualParquetFn } from './data';
+import { requestIndividualArrowFn } from './data';
 
 import SmartLink from '$components/common/smart-link';
 import { PanelHeader } from '$components/common/panel-header';
@@ -62,16 +62,16 @@ export default function Component(props: SpeciesComponentProps) {
   });
 
   const {
-    data: rawParquetData,
-    isFetching: isParquetFetching,
-    error: parquetError
+    data: rawArrowData,
+    isFetching: isArrowFetching,
+    error: arrowError
   } = useQuery({
     enabled: !!data,
-    queryKey: ['individual', id, 'parquet'],
-    queryFn: requestIndividualParquetFn(id)
+    queryKey: ['individual', id, 'arrow'],
+    queryFn: requestIndividualArrowFn(id)
   });
 
-  const dataLength = Object.keys(rawParquetData || {}).length;
+  const dataLength = rawArrowData?.dates.length || 0;
 
   useRafEffect(
     () => {
@@ -84,8 +84,8 @@ export default function Component(props: SpeciesComponentProps) {
     [dataLength, setCurrentPDFIndex]
   );
 
-  if (error || parquetError) {
-    return <RouteErrorHandler error={(error || parquetError)!} />;
+  if (error || arrowError) {
+    return <RouteErrorHandler error={(error || arrowError)!} />;
   }
 
   return (
@@ -118,7 +118,7 @@ export default function Component(props: SpeciesComponentProps) {
       />
 
       <Button
-        disabled={isParquetFetching}
+        disabled={isArrowFetching}
         onClick={() => setIsAnimating((isAnimating) => !isAnimating)}
         onWheel={(e) => {
           setCurrentPDFIndex((currentPDFIndex) => {
