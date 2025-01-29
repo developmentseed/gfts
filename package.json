@@ -98,6 +98,7 @@
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.1.7",
     "threads": "^1.7.0",
+    "use-pan-and-zoom": "^0.6.5",
     "wouter": "^3.3.5"
   },
   "parcelIgnore": [

@@ -32,7 +32,7 @@ export type HealpixArrowData = {
   color: FixedSizeList<Uint8>;
 };
 
-export type HealpixArrowMostProbData = HealpixArrowData & {
+export type HealpixArrowMostProbData = Omit<HealpixArrowData, 'geometry'> & {
   geometry: FixedSizeList<Float32>;
   pressure: Float64;
   temperature: Float64;

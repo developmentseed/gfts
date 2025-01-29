@@ -10238,6 +10238,7 @@ __metadata:
     threads: "npm:^1.7.0"
     ts-jest: "npm:^29.1.2"
     typescript: "npm:*"
+    use-pan-and-zoom: "npm:^0.6.5"
     util: "npm:^0.12.3"
     vm-browserify: "npm:^1.1.2"
     watcher: "npm:^2.3.1"
@@ -15246,6 +15247,15 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/2e4bdee68d65893b37e716ebdcc111550775189c80e662eda87d6f5b54dc431d3383a18914ea01a893ee5478902a878012713eaebcacbb6611ab88c463accb83
+  languageName: node
+  linkType: hard
+
+"use-pan-and-zoom@npm:^0.6.5":
+  version: 0.6.5
+  resolution: "use-pan-and-zoom@npm:0.6.5"
+  peerDependencies:
+    react: ^17.0.2
+  checksum: 10c0/24d6213063211c87e7980a58ad1e874e14cc2e37f325462ec9687a8fcfd1bd4807d90c52bdb8bbd1e93c6f956955a9dc67456fa5f17b9ab842a2d8ee928b5054
   languageName: node
   linkType: hard
 

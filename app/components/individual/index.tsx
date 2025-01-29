@@ -33,7 +33,7 @@ interface SpeciesComponentProps {
 }
 
 /**
- * Individual dish component.
+ * Individual fish component.
  */
 export default function Component(props: SpeciesComponentProps) {
   const {

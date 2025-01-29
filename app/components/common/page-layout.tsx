@@ -24,6 +24,7 @@ const Home = React.lazy(() => import('../home/'));
 const Search = React.lazy(() => import('../search/'));
 const Species = React.lazy(() => import('../species/'));
 const IndividualSingle = React.lazy(() => import('../individual/'));
+const IndividualSingleExplore = React.lazy(() => import('../individual/explore-data'));
 
 const MbMap = React.lazy(() => import('./mb-map'));
 
@@ -100,6 +101,14 @@ export default function PageLayout() {
               <MbMap />
             </Suspense>
           </Box>
+          <Suspense fallback={<Loading />}>
+            <Switch>
+              <Route
+                path='/individual/:id'
+                component={IndividualSingleExplore}
+              />
+            </Switch>
+          </Suspense>
         </Flex>
       </Show>
       <Show below='lg'>

@@ -28,7 +28,7 @@ export function IndividualPDF() {
       return [];
     }
 
-    const dateMillis = rawArrowData.dates[currentPDFIndex];
+    const dateMillis = rawArrowData.dates[currentPDFIndex]!;
     return [
       new GeoArrowSolidPolygonLayer({
         id: 'geoarrow-polygons',

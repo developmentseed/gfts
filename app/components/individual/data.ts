@@ -11,7 +11,6 @@ import {
   HealpixWorker,
   makeHealpixArrowTable
 } from '$utils/data/healpix';
-import { arrowMap, arrowReduce } from '$utils/data/arrow';
 
 export interface IndividualPDFPoint {
   position: number[];
@@ -76,30 +75,19 @@ export function requestIndividualArrowFn(id: string) {
       healpixData.mostProbData
     );
 
-    const dates = arrowReduce<Set<number>, 'date'>(
-      arrowTable,
-      'date',
-      (acc, row) => acc.add(row.date),
-      new Set()
-    );
-
-    const line = arrowMap<number[], 'geometry'>(
-      mostProbableTable,
-      'geometry',
-      (row) => {
-        return Array.from(row.geometry.toArray());
-      }
-    );
-
     return {
+      mostProbableTable,
       table: arrowTable,
-      dates: Array.from(dates),
+      dates: mostProbableTable.getChild('date')!.toJSON(),
       line: {
         type: 'Feature',
         properties: {},
         geometry: {
           type: 'LineString',
-          coordinates: line
+          coordinates: mostProbableTable
+            .getChild('geometry')!
+            .toJSON()
+            .map((v) => v!.toJSON())
         }
       } as Feature<LineString>
     };
