@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   Box,
   Button,
   Flex,
+  IconButton,
   Skeleton,
   Tab,
   TabList,
@@ -10,10 +11,16 @@ import {
   TabPanels,
   Tabs
 } from '@chakra-ui/react';
-import { CollecticonChevronLeftSmall } from '@devseed-ui/collecticons-chakra';
+import {
+  CollecticonChevronLeftSmall,
+  CollecticonChevronRightSmall,
+  CollecticonCirclePlay,
+  CollecticonCircleStop
+} from '@devseed-ui/collecticons-chakra';
 import { useQuery } from '@tanstack/react-query';
 
 import { requestIndividualArrowFn } from './data';
+import { useDaySelect } from './utils';
 
 import SmartLink from '$components/common/smart-link';
 import { PanelHeader } from '$components/common/panel-header';
@@ -25,6 +32,7 @@ import { NotFound } from '$components/common/error/not-found';
 import { useIndividualContext } from '$components/common/app-context';
 import { changeValue } from '$utils/format';
 import { useRafEffect } from '$utils/use-raf-effect-hook';
+import { StringChart } from '$components/common/chart-string';
 
 interface SpeciesComponentProps {
   params: {
@@ -41,7 +49,7 @@ export default function Component(props: SpeciesComponentProps) {
   } = props;
 
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
-  const { currentPDFIndex, setCurrentPDFIndex } = useIndividualContext();
+  const { setCurrentPDFIndex } = useIndividualContext();
 
   const { data, isSuccess, error } = useQuery<
     IndividualListed[],
@@ -84,6 +92,13 @@ export default function Component(props: SpeciesComponentProps) {
     [dataLength, setCurrentPDFIndex]
   );
 
+  const arrowDates = useMemo(() => {
+    return rawArrowData?.dates.map((d) => new Date(d));
+  }, [rawArrowData]);
+
+  const [selectedDay, setSelectedDay] = useDaySelect(arrowDates);
+  const [panZoomValue, setPanZoomValue] = useState({ x: 0, y: 0, zoom: 1 });
+
   if (error || arrowError) {
     return <RouteErrorHandler error={(error || arrowError)!} />;
   }
@@ -117,22 +132,6 @@ export default function Component(props: SpeciesComponentProps) {
         }
       />
 
-      <Button
-        disabled={isArrowFetching}
-        onClick={() => setIsAnimating((isAnimating) => !isAnimating)}
-        onWheel={(e) => {
-          setCurrentPDFIndex((currentPDFIndex) => {
-            return changeValue(
-              currentPDFIndex,
-              dataLength - 1,
-              e.deltaY < 0 ? -1 : 1
-            );
-          });
-        }}
-      >
-        {isAnimating ? 'Stop' : 'Play'} ({currentPDFIndex})
-      </Button>
-
       <Tabs size='sm' colorScheme='base' mx={-4}>
         <TabList>
           <Tab fontWeight='bold'>Visualize</Tab>
@@ -142,6 +141,52 @@ export default function Component(props: SpeciesComponentProps) {
         <TabPanels>
           <TabPanel>
             <LocationProbability />
+            {arrowDates && (
+              <StringChart
+                selectedDay={selectedDay}
+                data={arrowDates}
+                onDaySelect={setSelectedDay}
+                panZoomValue={panZoomValue}
+                onPanZoomValueChange={setPanZoomValue}
+              />
+            )}
+            <Flex gap={2}>
+              <IconButton
+                size='sm'
+                variant='outline'
+                aria-label='Previous'
+                icon={<CollecticonChevronLeftSmall />}
+                onClick={() => {
+                  setCurrentPDFIndex((currentPDFIndex) => {
+                    return changeValue(currentPDFIndex, dataLength - 1, -1);
+                  });
+                }}
+              />
+              <IconButton
+                size='sm'
+                variant='outline'
+                aria-label='Next'
+                icon={<CollecticonChevronRightSmall />}
+                onClick={() => {
+                  setCurrentPDFIndex((currentPDFIndex) => {
+                    return changeValue(currentPDFIndex, dataLength - 1, 1);
+                  });
+                }}
+              />
+              <IconButton
+                size='sm'
+                variant='outline'
+                aria-label={isAnimating ? 'Stop' : 'Play'}
+                icon={
+                  isAnimating ? (
+                    <CollecticonCircleStop />
+                  ) : (
+                    <CollecticonCirclePlay />
+                  )
+                }
+                onClick={() => setIsAnimating((isAnimating) => !isAnimating)}
+              />
+            </Flex>
           </TabPanel>
           <TabPanel>
             <p>two!</p>

@@ -1,12 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Flex } from '@chakra-ui/react';
+import React, { useMemo, useState } from 'react';
+import { Flex, Heading } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 
 import { requestIndividualArrowFn } from './data';
+import { combineData, useDaySelect } from './utils';
 
 import { DataSectionHead } from '$components/common/data-section-head';
-import { useIndividualContext } from '$components/common/app-context';
-import { LineChart } from '$components/common/line-chart';
+import { LineChart } from '$components/common/chart-line';
 
 interface SpeciesComponentProps {
   params: {
@@ -22,8 +22,6 @@ export default function Component(props: SpeciesComponentProps) {
     params: { id }
   } = props;
 
-  const { currentPDFIndex } = useIndividualContext();
-
   const {
     data: rawArrowData,
     isFetching: isArrowFetching,
@@ -33,14 +31,12 @@ export default function Component(props: SpeciesComponentProps) {
     queryFn: requestIndividualArrowFn(id)
   });
 
-  const [selectedDay, setSelectedDay] = useState<Date>();
-  const [panZoomValue, setPanZoomValue] = useState({ x: 0, y: 0, zoom: 1 });
+  const arrowDates = useMemo(() => {
+    return rawArrowData?.dates.map((d) => new Date(d));
+  }, [rawArrowData]);
 
-  useEffect(() => {
-    if (rawArrowData) {
-      setSelectedDay(new Date(rawArrowData.dates[currentPDFIndex]!));
-    }
-  }, [rawArrowData, currentPDFIndex]);
+  const [selectedDay, setSelectedDay] = useDaySelect(arrowDates);
+  const [panZoomValue, setPanZoomValue] = useState({ x: 0, y: 0, zoom: 1 });
 
   const { temperature, pressure } = useMemo(() => {
     if (!rawArrowData) {
@@ -92,7 +88,19 @@ export default function Component(props: SpeciesComponentProps) {
     >
       <Flex bg='surface.500' borderRadius='md' w='100%' p={4}>
         <Flex direction='column' gap={4} w='100%'>
-          <DataSectionHead title='Temperature' unit='°C' />
+          <Heading
+            as='h2'
+            size='sm'
+            mx={-4}
+            px={4}
+            pb={4}
+            borderBottom='2px'
+            borderBottomColor='base.100'
+          >
+            Measurements
+          </Heading>
+
+          <DataSectionHead title='Temperature' unit='°C' hLevel='h3' />
           <LineChart
             selectedDay={selectedDay}
             data={temperature}
@@ -100,7 +108,7 @@ export default function Component(props: SpeciesComponentProps) {
             panZoomValue={panZoomValue}
             onPanZoomValueChange={setPanZoomValue}
           />
-          <DataSectionHead title='Pressure' unit='...' />
+          <DataSectionHead title='Pressure' unit='PSI?' hLevel='h3' />
           <LineChart
             selectedDay={selectedDay}
             data={pressure}
@@ -113,15 +121,3 @@ export default function Component(props: SpeciesComponentProps) {
     </Flex>
   );
 }
-
-type CombineData = <R, T extends unknown[][]>(
-  matrix: [...T],
-  cb: (...args: { [K in keyof T]: T[K] extends (infer U)[] ? U : never }) => R
-) => R[];
-
-const combineData: CombineData = (matrix, cb) => {
-  return matrix[0].map((_, i) => {
-    const values = matrix.map((row) => row[i]) as any;
-    return cb(...values);
-  });
-};

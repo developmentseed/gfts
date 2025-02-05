@@ -78,7 +78,7 @@ export function requestIndividualArrowFn(id: string) {
     return {
       mostProbableTable,
       table: arrowTable,
-      dates: mostProbableTable.getChild('date')!.toJSON(),
+      dates: mostProbableTable.getChild('date')!.toJSON() as number[],
       line: {
         type: 'Feature',
         properties: {},
