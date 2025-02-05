@@ -2,20 +2,20 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { chakra, Box, usePrevious } from '@chakra-ui/react';
 import {
   differenceInDays,
-  isSameDay,
   isWithinInterval,
   lastDayOfMonth
 } from 'date-fns';
 import { extent } from 'd3';
 
+import { SlidingBox } from '../chart-utils/sliding-box';
+import { useDateRenders } from '../chart-utils/use-date-renders';
+import { usePanZoomControlled } from '../chart-utils/use-pan-and-zoom-controlled';
+import { useScaleX, useScaleY } from '../chart-utils/use-scales';
+import { formatMonthYear, isSameDayUndef } from '../chart-utils/utils';
 import { LineData } from './types';
-import { DAY_WIDTH, formatMonthYear, PADDING } from './utils';
+import { PADDING, DAY_WIDTH } from './use-sizes';
 import { useSizes } from './use-sizes';
-import { usePanZoomControlled } from './use-pan-and-zoom-controlled';
-import { useDateRenders } from './use-date-renders';
-import { useScales } from './use-scales';
-import { DataLine } from './data-points';
-import { SlidingBox } from './sliding-box';
+import { DataLine } from './data-line';
 import { AxisY } from './axis-y';
 import { AxisX } from './axis-x';
 
@@ -110,7 +110,7 @@ function LineChartContent(
 
   const { pan, setContainer, panZoomHandlers } = usePanZoomControlled({
     ...panZoomExtent,
-    requireCtrlToZoom: true,
+    disableWheel: true,
     value: panZoomValue,
     onChange: useCallback(
       (event) => {
@@ -122,14 +122,17 @@ function LineChartContent(
     )
   });
 
-  const { scaleFull, scalePartial, createScalePartial, yScale, yTicks } =
-    useScales({
-      dataArea,
-      yDomain: valueDomain,
-      dateDomain,
-      numDays,
-      xTranslate: -pan.x
-    });
+  const { scaleFull, scalePartial, createScalePartial } = useScaleX({
+    dataArea,
+    dateDomain,
+    numDays,
+    xTranslate: -pan.x,
+    dayWidth: DAY_WIDTH
+  });
+  const { yScale, yTicks } = useScaleY({
+    dataArea,
+    yDomain: valueDomain
+  });
 
   const { daysToRender, monthsToRender } = useDateRenders({
     scale: scalePartial
@@ -140,9 +143,7 @@ function LineChartContent(
   const prevSelectedDay = usePrevious(selectedDay);
   useEffect(() => {
     if (
-      selectedDay &&
-      prevSelectedDay &&
-      isSameDay(prevSelectedDay, selectedDay)
+      !isSameDayUndef(prevSelectedDay, selectedDay)
     ) {
       const visibleDays = {
         start: daysToRender[0],
@@ -151,10 +152,10 @@ function LineChartContent(
         end: daysToRender[daysToRender.length - 2]
       };
 
-      if (!isWithinInterval(selectedDay, visibleDays)) {
+      if (!isWithinInterval(selectedDay!, visibleDays)) {
         const centerAdjust = dataArea.width / 2;
         const newPanX = clamp(
-          scaleFull(selectedDay) - centerAdjust,
+          scaleFull(selectedDay!) - centerAdjust,
           0,
           -minPanX
         );
@@ -189,7 +190,7 @@ function LineChartContent(
         userSelect='none'
       >
         <defs>
-          <clipPath id='data-width'>
+          <clipPath id='line-chart-data-width'>
             <rect
               x={dataArea.x - DAY_WIDTH / 2}
               y={0}
@@ -210,7 +211,7 @@ function LineChartContent(
 
         <AxisY ticks={yTicks} yScale={yScale} dataArea={dataArea} />
 
-        <g clipPath='url(#data-width)'>
+        <g clipPath='url(#line-chart-data-width)'>
           <AxisX
             selectedDay={selectedDay}
             onDaySelect={onDaySelect}
@@ -224,7 +225,7 @@ function LineChartContent(
           />
         </g>
 
-        <g clipPath='url(#data-width)'>
+        <g clipPath='url(#line-chart-data-width)'>
           {monthsToRender.map((month) => (
             <SlidingBox
               key={month.toISOString()}
@@ -245,29 +246,9 @@ function LineChartContent(
           ))}
         </g>
 
-        <DataLine xScale={scalePartial} yScale={yScale} data={data} />
-
-        {/* {bisectingDay && (
-          <chakra.line
-            x1={scalePartial(bisectingDay.date)}
-            x2={scalePartial(bisectingDay.date)}
-            y1={dataArea.y}
-            y2={dataArea.y2}
-            stroke='primary.400'
-          />
-        )} */}
-
-        {data.map(({ date }) => (
-          <chakra.rect
-            key={date.toISOString()}
-            x={scalePartial(date) - DAY_WIDTH / 4}
-            y={dataArea.y}
-            width={`${DAY_WIDTH / 2}px`}
-            height={dataArea.height}
-            fillOpacity={0}
-            onClick={() => onDaySelect(date)}
-          />
-        ))}
+        <g clipPath='url(#line-chart-data-width)'>
+          <DataLine xScale={scalePartial} yScale={yScale} data={data} />
+        </g>
       </chakra.svg>
     </Box>
   );

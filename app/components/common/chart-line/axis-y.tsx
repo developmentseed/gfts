@@ -1,7 +1,7 @@
 import React from 'react';
 import { chakra } from '@chakra-ui/react';
 
-import { DAY_WIDTH, PADDING } from './utils';
+import { PADDING, DAY_WIDTH } from './use-sizes';
 
 interface AxisYProps {
   ticks: number[];

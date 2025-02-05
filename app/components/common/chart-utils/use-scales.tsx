@@ -1,22 +1,14 @@
 import { useCallback, useMemo } from 'react';
 import { scaleLinear, scaleTime } from 'd3';
 
-import { DAY_WIDTH } from './utils';
-
-export function useScales(params: {
+export function useScaleX(params: {
   dataArea: { x: number; x2: number; y: number; y2: number };
-  yDomain: [number, number];
   dateDomain: [Date, Date];
   numDays: number;
   xTranslate: number;
+  dayWidth: number;
 }) {
-  const {
-    dataArea,
-    yDomain: [min, max],
-    dateDomain,
-    numDays,
-    xTranslate
-  } = params;
+  const { dataArea, dateDomain, numDays, xTranslate, dayWidth } = params;
 
   // Scale for the full size of the timeline taking the size of each day into
   // account.
@@ -24,8 +16,8 @@ export function useScales(params: {
     () =>
       scaleTime()
         .domain(dateDomain)
-        .range([dataArea.x, numDays * DAY_WIDTH]),
-    [dateDomain, numDays, dataArea]
+        .range([dataArea.x, numDays * dayWidth]),
+    [dateDomain, numDays, dataArea, dayWidth]
   );
 
   // Scale creator for the visible part of the timeline taking the given pan.
@@ -46,6 +38,18 @@ export function useScales(params: {
     [createScalePartial, xTranslate]
   );
 
+  return { scaleFull, scalePartial, createScalePartial };
+}
+
+export function useScaleY(params: {
+  dataArea: { x: number; x2: number; y: number; y2: number };
+  yDomain: [number, number];
+}) {
+  const {
+    dataArea,
+    yDomain: [min, max]
+  } = params;
+
   const { yScale, yTicks } = useMemo(() => {
     const yScale = scaleLinear()
       .domain([min, max])
@@ -55,5 +59,5 @@ export function useScales(params: {
     return { yScale, yTicks };
   }, [dataArea, min, max]);
 
-  return { scaleFull, scalePartial, createScalePartial, yScale, yTicks };
+  return { yScale, yTicks };
 }

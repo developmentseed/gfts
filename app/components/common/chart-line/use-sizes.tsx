@@ -1,7 +1,15 @@
 import { useMemo, useState } from 'react';
 import useDimensions from 'react-cool-dimensions';
 
-import { PADDING } from './utils';
+export const DAY_WIDTH = 32;
+export const DAY_HEIGHT = 24;
+
+export const PADDING = {
+  top: DAY_HEIGHT + 8,
+  right: 36,
+  bottom: 24,
+  left: 50
+};
 
 export function useSizes() {
   const [chartSize, setChartSize] = useState({ width: 0, height: 0 });

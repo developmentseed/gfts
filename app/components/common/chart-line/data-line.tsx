@@ -22,15 +22,13 @@ export function DataLine(props: DataLineProps) {
   );
 
   return (
-    <g clipPath='url(#data-width)'>
-      <chakra.path
-        d={lineFn(data)!}
-        fill='none'
-        stroke='primary.500'
-        strokeWidth='2px'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
-    </g>
+    <chakra.path
+      d={lineFn(data)!}
+      fill='none'
+      stroke='primary.500'
+      strokeWidth='2px'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
   );
 }

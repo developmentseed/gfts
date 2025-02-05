@@ -2,7 +2,7 @@ import React from 'react';
 import { chakra, HTMLChakraProps } from '@chakra-ui/react';
 import { isSameDay } from 'date-fns';
 
-import { DAY_HEIGHT, DAY_WIDTH } from './utils';
+import { DAY_HEIGHT, DAY_WIDTH } from './use-sizes';
 import { zeroPad } from '$utils/format';
 
 interface AxisXProps {
