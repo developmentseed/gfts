@@ -45,7 +45,7 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
 
       - name: Install
-        run: yarn install
+        run: corepack enable && yarn install
 
       - name: Build
         run: yarn build
