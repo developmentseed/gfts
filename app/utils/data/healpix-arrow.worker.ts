@@ -15,22 +15,12 @@ import {
 } from 'apache-arrow';
 import { worker } from '@geoarrow/geoarrow-js';
 import parquet from '@dsnp/parquetjs/dist/browser/parquet.cjs.js';
-import { interpolateViridis, scaleSequential } from 'd3';
 
+import { getPDFColor } from './color';
 import {
   healpixId2CenterPoint,
   healpixId2PolygonCoordinates
 } from '$utils/data/healpix';
-
-const colorScale = scaleSequential([0, 0.0003], interpolateViridis);
-const getColor = (v: number) => [...rgb2array(colorScale(v)), 255];
-
-function rgb2array(hex: string) {
-  return hex
-    .substring(1)
-    .match(/.{2}/g)!
-    .map((v) => parseInt(v, 16));
-}
 
 function makeArrowPolygon(data, ringOffset: Uint32Array) {
   const count = ringOffset.length - 1;
@@ -113,7 +103,7 @@ expose(async (url: string, nside: number) => {
     Array.prototype.push.apply(allCoords, polygonGeom.flat());
     dateBuilder.append(time);
     allValues[i] = record.states;
-    colors.set(getColor(record.states), i * 4);
+    colors.set(getPDFColor(record.states), i * 4);
 
     if (record.temperature !== null && record.pressure !== null) {
       const pointCoords = healpixId2CenterPoint(record.cell_ids, nside);

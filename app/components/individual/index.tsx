@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import {
   Box,
-  Button,
   Flex,
   IconButton,
   Skeleton,
@@ -33,6 +32,7 @@ import { useIndividualContext } from '$components/common/app-context';
 import { changeValue } from '$utils/format';
 import { useRafEffect } from '$utils/use-raf-effect-hook';
 import { StringChart } from '$components/common/chart-string';
+import { getPDFColorLegend } from '$utils/data/color';
 
 interface SpeciesComponentProps {
   params: {
@@ -205,25 +205,7 @@ function LocationProbability() {
         unit='%'
         // onToggle={console.log}
       />
-      <LegendBar
-        stops={[
-          { color: '#000004', value: 0 },
-          { color: '#0D0829', value: 7 },
-          { color: '#280B54', value: 14 },
-          { color: '#480B6A', value: 21 },
-          { color: '#65156E', value: 28 },
-          { color: '#82206C', value: 35 },
-          { color: '#9F2A63', value: 42 },
-          { color: '#BB3755', value: 49 },
-          { color: '#D44842', value: 56 },
-          { color: '#E8602D', value: 63 },
-          { color: '#F57D15', value: 70 },
-          { color: '#FB9E07', value: 77 },
-          { color: '#FAC127', value: 84 },
-          { color: '#F3E45C', value: 91 },
-          { color: '#FCFFA4', value: 100 }
-        ]}
-      />
+      <LegendBar stops={getPDFColorLegend()} />
     </Flex>
   );
 }
