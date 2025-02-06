@@ -1,16 +1,21 @@
 import React, { useMemo } from 'react';
-import { GeoArrowSolidPolygonLayer } from '@geoarrow/deck.gl-layers';
+// import { GeoArrowSolidPolygonLayer } from '@geoarrow/deck.gl-layers';
+// import { DataFilterExtension } from '@deck.gl/extensions';
 import { useQuery } from '@tanstack/react-query';
 import { spawn } from 'threads';
 
-import { HealpixWorker, makeHealpixArrowTable } from '$utils/data/healpix';
+import {
+  HealpixArrowData,
+  HealpixWorker,
+  makeHealpixArrowTable
+} from '$utils/data/healpix';
 import { DeckGLOverlay } from '$components/common/deckgl-overlay';
 
 export function SpeciesPDF() {
   const { data } = useQuery({
     queryKey: ['individual', 'healpix'],
     queryFn: async () => {
-      const url = `${process.env.DATA_API}/healpix_cellids.csv?`;
+      const url = `${process.env.DATA_API}/data/gfts_AD_A11146.parquet`;
       const nside = 4096;
 
       const healpixWorker = await spawn<HealpixWorker>(
@@ -23,13 +28,12 @@ export function SpeciesPDF() {
         )
       );
 
-      try {
-        const healpixData = await healpixWorker(url, nside);
+      const healpixData = await healpixWorker(url, nside);
+      const arrowTable = makeHealpixArrowTable<HealpixArrowData>(
+        healpixData.data
+      );
 
-        return makeHealpixArrowTable(healpixData);
-      } catch (error) {
-        console.log('error', error);
-      }
+      return arrowTable;
     }
   });
 
@@ -37,13 +41,24 @@ export function SpeciesPDF() {
     () =>
       data?.getChild
         ? [
-            new GeoArrowSolidPolygonLayer({
-              id: 'geoarrow-polygons',
-              data: data,
-              getPolygon: data.getChild('geometry')!,
-              _normalize: false,
-              getFillColor: data.getChild('colors')!
-            })
+            // new GeoArrowSolidPolygonLayer({
+            //   id: 'geoarrow-polygons',
+            //   data: data,
+            //   getPolygon: data.getChild('geometry')!,
+            //   _normalize: false,
+            //   getFillColor: ({ index, data }) => {
+            //     const value = data.data.getChild('value')!.get(index);
+            //     return getColor(value);
+            //   },
+
+            //   getFilterValue: (_, { index, data }) => {
+            //     // console.log('d', new Date(data.data.getChild('date')!.get(index)));
+            //     return data.data.getChild('date')!.get(index);
+            //   },
+            //   filterRange: [1439424000000, 1439510400000],
+
+            //   extensions: [new DataFilterExtension()]
+            // })
           ]
         : [],
     [data]

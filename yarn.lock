@@ -2785,18 +2785,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@geoarrow/geoarrow-js@npm:^0.3.0, @geoarrow/geoarrow-js@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "@geoarrow/geoarrow-js@npm:0.3.1"
+"@geoarrow/geoarrow-js@portal:/Users/daniel/guts/projects/geoarrow-js::locator=gtfs%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@geoarrow/geoarrow-js@portal:/Users/daniel/guts/projects/geoarrow-js::locator=gtfs%40workspace%3A."
   dependencies:
     "@math.gl/polygon": "npm:^4.0.0"
     proj4: "npm:^2.9.2"
     threads: "npm:^1.7.0"
   peerDependencies:
+    "@loaders.gl/schema": "*"
+    "@loaders.gl/wkt": "*"
     apache-arrow: ">=15"
-  checksum: 10c0/0f7cb53ab43651cdca5ab7e0055ba1a7a3b1ce69f86c6ddabc2d5375b7426895a12ea3b35e0c2aba208b0660b916c7c5e7f7635c0830e7a5d1fc4a03146b0907
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@hscmap/healpix@npm:^1.4.12":
   version: 1.4.12
@@ -5751,6 +5752,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@turf/bbox@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "@turf/bbox@npm:7.2.0"
+  dependencies:
+    "@turf/helpers": "npm:^7.2.0"
+    "@turf/meta": "npm:^7.2.0"
+    "@types/geojson": "npm:^7946.0.10"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/766d59d5f75c272481e971cd4004e139962607e8f34391b2abfb15bb34f9544a0479ceb14772565e005e4a12fdd82adf0d440ab1c9e0decbde6de50a5706db43
+  languageName: node
+  linkType: hard
+
 "@turf/boolean-clockwise@npm:^5.1.5":
   version: 5.1.5
   resolution: "@turf/boolean-clockwise@npm:5.1.5"
@@ -5777,6 +5790,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@turf/helpers@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "@turf/helpers@npm:7.2.0"
+  dependencies:
+    "@types/geojson": "npm:^7946.0.10"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/4d6f57164cca00ec7a18e2d3c0200d0274e4ab2b6b3201c6a867b867d899f3f618a82ae242617d467efb04f32740cec150ae06a0e07ee39318397ebc34914687
+  languageName: node
+  linkType: hard
+
 "@turf/invariant@npm:^5.1.5":
   version: 5.2.0
   resolution: "@turf/invariant@npm:5.2.0"
@@ -5792,6 +5815,16 @@ __metadata:
   dependencies:
     "@turf/helpers": "npm:^5.1.5"
   checksum: 10c0/fd41fbad84d840bebf75fdf13a4e3dd15b8c600251533073d5f6129a31a42e4f88790ce396492cec69f42ca4365e96d6f7940aeb302daaedcb795dc9414e7adc
+  languageName: node
+  linkType: hard
+
+"@turf/meta@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "@turf/meta@npm:7.2.0"
+  dependencies:
+    "@turf/helpers": "npm:^7.2.0"
+    "@types/geojson": "npm:^7946.0.10"
+  checksum: 10c0/707ed63ba64fe48769806bf2419f5c0cd2ebf821a6467aeffb784ba7ebd6a63ec98d4192b97915948529c00304ed46ddc83842a80714fb1f2018fd4e3c455498
   languageName: node
   linkType: hard
 
@@ -6194,6 +6227,13 @@ __metadata:
   version: 7946.0.14
   resolution: "@types/geojson@npm:7946.0.14"
   checksum: 10c0/54f3997708fa2970c03eeb31f7e4540a0eb6387b15e9f8a60513a1409c23cafec8d618525404573468b59c6fecbfd053724b3327f7fca416729c26271d799f55
+  languageName: node
+  linkType: hard
+
+"@types/geojson@npm:^7946.0.10":
+  version: 7946.0.16
+  resolution: "@types/geojson@npm:7946.0.16"
+  checksum: 10c0/1ff24a288bd5860b766b073ead337d31d73bdc715e5b50a2cee5cb0af57a1ed02cc04ef295f5fa68dc40fe3e4f104dd31282b2b818a5ba3231bc1001ba084e3c
   languageName: node
   linkType: hard
 
@@ -10237,6 +10277,7 @@ __metadata:
     "@tanstack/react-query": "npm:^5.62.2"
     "@testing-library/jest-dom": "npm:^6.4.0"
     "@testing-library/react": "npm:^14.2.0"
+    "@turf/bbox": "npm:^7.2.0"
     "@types/d3": "npm:^7.4.3"
     "@types/geojson": "npm:^7946.0.14"
     "@types/mapbox-gl": "npm:^2.7.20"
@@ -14998,7 +15039,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.4.0, tslib@npm:^2.6.2, tslib@npm:^2.8.0":
+"tslib@npm:^2.0.0, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.4.0, tslib@npm:^2.6.2, tslib@npm:^2.8.0, tslib@npm:^2.8.1":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
