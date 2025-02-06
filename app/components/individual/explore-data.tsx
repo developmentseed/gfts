@@ -79,7 +79,6 @@ export default function Component(props: SpeciesComponentProps) {
       right={!isArrowFetching ? 4 : '-30rem'}
       zIndex={100}
       p={4}
-      pl={2}
       gap={2}
       bg='surface.400a'
       borderRadius='md'
@@ -108,7 +107,7 @@ export default function Component(props: SpeciesComponentProps) {
             panZoomValue={panZoomValue}
             onPanZoomValueChange={setPanZoomValue}
           />
-          <DataSectionHead title='Pressure' unit='PSI?' hLevel='h3' />
+          <DataSectionHead title='Pressure' unit='PSI' hLevel='h3' />
           <LineChart
             selectedDay={selectedDay}
             data={pressure}

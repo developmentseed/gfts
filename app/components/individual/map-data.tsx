@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams } from 'wouter';
 import { useToken } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { Layer, Source } from 'react-map-gl';
+import { Layer, LngLatBoundsLike, Source, useMap } from 'react-map-gl';
 import { GeoArrowSolidPolygonLayer } from '@geoarrow/deck.gl-layers';
 import { DataFilterExtension } from '@deck.gl/extensions';
+import bbox from '@turf/bbox';
 
 import compassUrl from './compass.png';
 
@@ -57,6 +58,8 @@ export function IndividualLine() {
     'secondary.600'
   ]);
 
+  const map = useMap();
+
   useMapImage({
     url: compassUrl,
     name: 'compass'
@@ -67,6 +70,14 @@ export function IndividualLine() {
     queryKey: ['individual', id, 'arrow'],
     queryFn: requestIndividualArrowFn(id)
   });
+
+  useEffect(() => {
+    if (data?.line && map.current) {
+      map.current?.fitBounds(bbox(data.line) as LngLatBoundsLike, {
+        padding: { top: 20, bottom: 20, left: 100, right: 100 }
+      });
+    }
+  }, [data?.line, map]);
 
   return data?.line ? (
     <Source type='geojson' data={data.line}>

@@ -140,53 +140,69 @@ export default function Component(props: SpeciesComponentProps) {
 
         <TabPanels>
           <TabPanel>
-            <LocationProbability />
-            {arrowDates && (
-              <StringChart
-                selectedDay={selectedDay}
-                data={arrowDates}
-                onDaySelect={setSelectedDay}
-                panZoomValue={panZoomValue}
-                onPanZoomValueChange={setPanZoomValue}
-              />
+            {isArrowFetching && (
+              <Flex direction='column' gap={2}>
+                <Skeleton height={8} width='100%' />
+                <Skeleton height={8} width='100%' />
+                <Skeleton height={8} width='100%' />
+                <Flex gap={4}>
+                  <Skeleton boxSize={8} />
+                  <Skeleton boxSize={8} />
+                  <Skeleton boxSize={8} />
+                </Flex>
+              </Flex>
             )}
-            <Flex gap={2}>
-              <IconButton
-                size='sm'
-                variant='outline'
-                aria-label='Previous'
-                icon={<CollecticonChevronLeftSmall />}
-                onClick={() => {
-                  setCurrentPDFIndex((currentPDFIndex) => {
-                    return changeValue(currentPDFIndex, dataLength - 1, -1);
-                  });
-                }}
-              />
-              <IconButton
-                size='sm'
-                variant='outline'
-                aria-label='Next'
-                icon={<CollecticonChevronRightSmall />}
-                onClick={() => {
-                  setCurrentPDFIndex((currentPDFIndex) => {
-                    return changeValue(currentPDFIndex, dataLength - 1, 1);
-                  });
-                }}
-              />
-              <IconButton
-                size='sm'
-                variant='outline'
-                aria-label={isAnimating ? 'Stop' : 'Play'}
-                icon={
-                  isAnimating ? (
-                    <CollecticonCircleStop />
-                  ) : (
-                    <CollecticonCirclePlay />
-                  )
-                }
-                onClick={() => setIsAnimating((isAnimating) => !isAnimating)}
-              />
-            </Flex>
+            {arrowDates && (
+              <>
+                <LocationProbability />
+                <StringChart
+                  selectedDay={selectedDay}
+                  data={arrowDates}
+                  onDaySelect={setSelectedDay}
+                  panZoomValue={panZoomValue}
+                  onPanZoomValueChange={setPanZoomValue}
+                />
+                <Flex gap={2} mt={4}>
+                  <IconButton
+                    size='sm'
+                    variant='outline'
+                    aria-label='Previous'
+                    icon={<CollecticonChevronLeftSmall />}
+                    onClick={() => {
+                      setCurrentPDFIndex((currentPDFIndex) =>
+                        changeValue(currentPDFIndex, dataLength - 1, -1)
+                      );
+                    }}
+                  />
+                  <IconButton
+                    size='sm'
+                    variant='outline'
+                    aria-label='Next'
+                    icon={<CollecticonChevronRightSmall />}
+                    onClick={() => {
+                      setCurrentPDFIndex((currentPDFIndex) =>
+                        changeValue(currentPDFIndex, dataLength - 1, 1)
+                      );
+                    }}
+                  />
+                  <IconButton
+                    size='sm'
+                    variant='outline'
+                    aria-label={isAnimating ? 'Stop' : 'Play'}
+                    icon={
+                      isAnimating ? (
+                        <CollecticonCircleStop />
+                      ) : (
+                        <CollecticonCirclePlay />
+                      )
+                    }
+                    onClick={() => {
+                      setIsAnimating((isAnimating) => !isAnimating);
+                    }}
+                  />
+                </Flex>
+              </>
+            )}
           </TabPanel>
           <TabPanel>
             <p>two!</p>

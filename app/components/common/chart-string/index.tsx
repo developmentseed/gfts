@@ -178,7 +178,7 @@ function StringChartContent(
             <rect
               x={dataArea.x - DAY_WIDTH / 2}
               y={0}
-              width={dataArea.width + DAY_WIDTH / 2}
+              width={dataArea.x2 + DAY_WIDTH / 2}
               height={chart.height}
             />
           </clipPath>
@@ -225,7 +225,7 @@ function StringChartContent(
         <g clipPath='url(#data-width)'>
           <chakra.line
             x1={0}
-            x2={dataArea.x2}
+            x2={chart.width}
             y1={dataArea.y}
             y2={dataArea.y}
             stroke='base.200'
