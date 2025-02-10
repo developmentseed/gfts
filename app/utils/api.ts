@@ -8,12 +8,19 @@ export interface SpeciesListed {
   coords: [number, number];
 }
 
+export interface SpeciesGroup {
+  id: string;
+  name: string;
+  file: string;
+}
+
 export interface Species {
   id: string;
   name: string;
   region: string;
   image: string;
   coords: [number, number];
+  groups: SpeciesGroup[];
 }
 
 export interface IndividualListed {

@@ -221,7 +221,7 @@ function LocationProbability() {
         unit='%'
         // onToggle={console.log}
       />
-      <LegendBar stops={getPDFColorLegend()} />
+      <LegendBar stops={getPDFColorLegend()} labels={['Less', 'More']} />
     </Flex>
   );
 }

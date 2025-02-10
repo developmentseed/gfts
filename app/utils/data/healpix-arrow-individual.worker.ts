@@ -1,64 +1,23 @@
 import { expose, Transfer } from 'threads/worker';
 import {
-  Data,
   DateMillisecond,
   Field,
   FixedSizeList,
   Float32,
   Float64,
-  List,
   makeBuilder,
   makeData,
-  Schema,
-  Struct,
   Uint8
 } from 'apache-arrow';
 import { worker } from '@geoarrow/geoarrow-js';
 import parquet from '@dsnp/parquetjs/dist/browser/parquet.cjs.js';
 
 import { getPDFColor } from './color';
+import { makeArrowPolygon, makeStruct } from './arrow';
 import {
   healpixId2CenterPoint,
   healpixId2PolygonCoordinates
 } from '$utils/data/healpix';
-
-function makeArrowPolygon(data, ringOffset: Uint32Array) {
-  const count = ringOffset.length - 1;
-  const coordsArray = new Float32Array(data);
-  const polygonOffset = new Uint32Array(count + 1).map((_, i) => i);
-  const coords = makeData({
-    type: new Float32(),
-    data: coordsArray
-  });
-  const vertices = makeData({
-    type: new FixedSizeList(2, new Field('xy', coords.type, false)),
-    child: coords
-  });
-  const rings = makeData({
-    type: new List(new Field('vertices', vertices.type, false)),
-    valueOffsets: ringOffset,
-    child: vertices
-  });
-
-  return makeData({
-    type: new List(new Field('rings', rings.type, false)),
-    valueOffsets: polygonOffset,
-    child: rings
-  });
-}
-
-function makeStruct(data: [string, Data][]) {
-  const schema = new Schema(
-    data.map(([name, buffer]) => new Field(name, buffer.type))
-  );
-
-  const struct = makeData({
-    type: new Struct(schema.fields),
-    children: data.map(([, buffer]) => buffer)
-  });
-
-  return struct;
-}
 
 expose(async (url: string, nside: number) => {
   const reader = await parquet.ParquetReader.openUrl(url);
@@ -90,6 +49,12 @@ expose(async (url: string, nside: number) => {
   });
   const mostProbValues: number[] = [];
 
+  let colorCalcState = {
+    prevTime: null as number | null,
+    minMaxForTime: [0, 0],
+    startIndex: 0
+  };
+
   let record;
   while ((record = await cursor.next())) {
     const i = cursor.cursorIndex - 1;
@@ -97,13 +62,44 @@ expose(async (url: string, nside: number) => {
 
     const time = Number(record.time) / 1e6;
 
+    // Calculate colors for the previous time step.
+    // We assume the records are sorted by time, so when the time changes,
+    // we calculate the colors for the previous time step.
+    if (i === 0) {
+      // Initialize the color calculation state.
+      colorCalcState = {
+        prevTime: time,
+        minMaxForTime: [record.states, record.states],
+        startIndex: 0
+      };
+    } else if (colorCalcState.prevTime !== time) {
+      const { minMaxForTime, startIndex } = colorCalcState;
+
+      // Calculate the colors for the previous time step.
+      for (let j = startIndex; j < i; j++) {
+        const color = getPDFColor(allValues[j], minMaxForTime);
+        colors.set(color, j * 4);
+      }
+
+      // Update the color calculation state.
+      colorCalcState = {
+        prevTime: time,
+        minMaxForTime: [record.states, record.states],
+        startIndex: i
+      };
+    } else {
+      colorCalcState.minMaxForTime = [
+        Math.min(colorCalcState.minMaxForTime[0], record.states),
+        Math.max(colorCalcState.minMaxForTime[1], record.states)
+      ];
+    }
+
     const polygonGeom = healpixId2PolygonCoordinates(record.cell_ids, nside);
 
     ringOffset[i + 1] = ringOffset[i] + polygonGeom.length;
     Array.prototype.push.apply(allCoords, polygonGeom.flat());
     dateBuilder.append(time);
     allValues[i] = record.states;
-    colors.set(getPDFColor(record.states), i * 4);
 
     if (record.temperature !== null && record.pressure !== null) {
       const pointCoords = healpixId2CenterPoint(record.cell_ids, nside);

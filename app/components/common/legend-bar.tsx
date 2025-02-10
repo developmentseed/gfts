@@ -5,10 +5,11 @@ import { round } from '$utils/format';
 interface LegendBarProps {
   stops: { value: number; color: string }[];
   unit?: string;
+  labels?: string[];
 }
 
 export function LegendBar(props: LegendBarProps) {
-  const { stops, unit } = props;
+  const { stops, unit, labels } = props;
 
   const lastStop = stops[stops.length - 1];
 
@@ -25,11 +26,21 @@ export function LegendBar(props: LegendBarProps) {
         boxShadow={`inset 0 0 0 1px ${shadowColor}`}
       />
       <Flex justifyContent='space-between' fontSize='xs'>
-        <VisuallyHidden>From</VisuallyHidden>
-        <Text as='span'>{round(stops[0].value, 3)}</Text>
-        <VisuallyHidden>to</VisuallyHidden>
-        <Text as='span'>{round(lastStop.value, 3)}</Text>
-        {unit !== undefined && <VisuallyHidden>{unit}</VisuallyHidden>}
+        {labels ? (
+          labels.map((label, i) => (
+            <Text key={`label-${[i]}`} as='span'>
+              {label}
+            </Text>
+          ))
+        ) : (
+          <>
+            <VisuallyHidden>From</VisuallyHidden>
+            <Text as='span'>{round(stops[0].value, 3)}</Text>
+            <VisuallyHidden>to</VisuallyHidden>
+            <Text as='span'>{round(lastStop.value, 3)}</Text>
+            {unit !== undefined && <VisuallyHidden>{unit}</VisuallyHidden>}
+          </>
+        )}
       </Flex>
     </Box>
   );

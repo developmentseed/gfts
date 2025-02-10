@@ -1,68 +1,59 @@
-import React, { useMemo } from 'react';
-// import { GeoArrowSolidPolygonLayer } from '@geoarrow/deck.gl-layers';
-// import { DataFilterExtension } from '@deck.gl/extensions';
+import React, { useEffect, useMemo } from 'react';
+import { useParams } from 'wouter';
+import { GeoArrowSolidPolygonLayer } from '@geoarrow/deck.gl-layers';
 import { useQuery } from '@tanstack/react-query';
-import { spawn } from 'threads';
+import { useMap } from 'react-map-gl';
 
-import {
-  HealpixArrowData,
-  HealpixWorker,
-  makeHealpixArrowTable
-} from '$utils/data/healpix';
+import { requestSpeciesArrowFn } from './data';
+
 import { DeckGLOverlay } from '$components/common/deckgl-overlay';
+import { useSpeciesContext } from '$components/common/app-context';
+import { getJsonFn, Species } from '$utils/api';
+import { MapLoadingIndicator } from '$components/common/map-loading-indicator';
 
 export function SpeciesPDF() {
-  const { data } = useQuery({
-    queryKey: ['individual', 'healpix'],
-    queryFn: async () => {
-      const url = `${process.env.DATA_API}/data/gfts_AD_A11146.parquet`;
-      const nside = 4096;
+  const { id } = useParams<{ id: string }>();
+  const { group } = useSpeciesContext();
+  const map = useMap();
 
-      const healpixWorker = await spawn<HealpixWorker>(
-        new Worker(
-          // @ts-expect-error - This is a dynamic import.
-          new URL('../../utils/data/healpix-arrow.worker.ts', import.meta.url),
-          {
-            type: 'module'
-          }
-        )
-      );
-
-      const healpixData = await healpixWorker(url, nside);
-      const arrowTable = makeHealpixArrowTable<HealpixArrowData>(
-        healpixData.data
-      );
-
-      return arrowTable;
-    }
+  const { data } = useQuery<Species>({
+    queryKey: ['species', id],
+    queryFn: getJsonFn(`/api/species/${id}.json`)
   });
 
-  const deckGlLayers = useMemo(
-    () =>
-      data?.getChild
-        ? [
-            // new GeoArrowSolidPolygonLayer({
-            //   id: 'geoarrow-polygons',
-            //   data: data,
-            //   getPolygon: data.getChild('geometry')!,
-            //   _normalize: false,
-            //   getFillColor: ({ index, data }) => {
-            //     const value = data.data.getChild('value')!.get(index);
-            //     return getColor(value);
-            //   },
+  useEffect(() => {
+    if (data) {
+      map.current?.panTo(data.coords, { offset: [200, 0] });
+    }
+  }, [data, map]);
 
-            //   getFilterValue: (_, { index, data }) => {
-            //     // console.log('d', new Date(data.data.getChild('date')!.get(index)));
-            //     return data.data.getChild('date')!.get(index);
-            //   },
-            //   filterRange: [1439424000000, 1439510400000],
+  const { data: rawArrowData, isLoading } = useQuery({
+    enabled: !!group?.id,
+    queryKey: ['species', id, 'arrow', group?.id],
+    queryFn: requestSpeciesArrowFn(group?.file)
+  });
 
-            //   extensions: [new DataFilterExtension()]
-            // })
-          ]
-        : [],
-    [data]
+  const deckGlLayers = useMemo(() => {
+    if (!rawArrowData?.table || !group?.id) {
+      return [];
+    }
+
+    return [
+      new GeoArrowSolidPolygonLayer({
+        id: `geoarrow-species-polygons-${group.id}`,
+        data: rawArrowData.table,
+        // @ts-expect-error is not assignable to type 'undefined'
+        getPolygon: rawArrowData.table.getChild('geometry')!,
+        _normalize: false,
+        getFillColor: rawArrowData.table.getChild('color')!
+      })
+    ];
+  }, [rawArrowData, group?.id]);
+
+  return (
+    <>
+      <MapLoadingIndicator isLoading={isLoading} />
+      <DeckGLOverlay layers={deckGlLayers} />
+    </>
   );
-
-  return <DeckGLOverlay layers={deckGlLayers} />;
 }

@@ -13,12 +13,13 @@ import { requestIndividualArrowFn } from './data';
 import { useIndividualContext } from '$components/common/app-context';
 import { useMapImage } from '$utils/use-map-image-hook';
 import { DeckGLOverlay } from '$components/common/deckgl-overlay';
+import { MapLoadingIndicator } from '$components/common/map-loading-indicator';
 
 export function IndividualPDF() {
   const { id } = useParams<{ id: string }>();
   const { currentPDFIndex } = useIndividualContext();
 
-  const { data: rawArrowData } = useQuery({
+  const { data: rawArrowData, isLoading } = useQuery({
     enabled: !!id,
     queryKey: ['individual', id, 'arrow'],
     queryFn: requestIndividualArrowFn(id)
@@ -48,7 +49,12 @@ export function IndividualPDF() {
     ];
   }, [rawArrowData, currentPDFIndex]);
 
-  return <DeckGLOverlay layers={deckGlLayers} />;
+  return (
+    <>
+      <MapLoadingIndicator isLoading={isLoading} />
+      <DeckGLOverlay layers={deckGlLayers} />
+    </>
+  );
 }
 
 export function IndividualLine() {

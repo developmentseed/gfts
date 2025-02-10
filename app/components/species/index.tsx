@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Flex,
+  Select,
   Skeleton,
   Tab,
   TabList,
@@ -18,6 +19,8 @@ import { getJsonFn, Species } from '$utils/api';
 import { LegendBar } from '$components/common/legend-bar';
 import { DataSectionHead } from '$components/common/data-section-head';
 import { RouteErrorHandler } from '$components/common/error';
+import { useSpeciesContext } from '$components/common/app-context';
+import { getPDFColorLegend } from '$utils/data/color';
 
 interface SpeciesComponentProps {
   params: {
@@ -33,10 +36,18 @@ export default function Component(props: SpeciesComponentProps) {
     params: { id }
   } = props;
 
+  const { group, setGroup } = useSpeciesContext();
+
   const { data, isSuccess, error } = useQuery<Species>({
     queryKey: ['species', id],
     queryFn: getJsonFn(`/api/species/${id}.json`)
   });
+
+  useEffect(() => {
+    if (data?.groups?.length) {
+      setGroup(data.groups[0]);
+    }
+  }, [data, setGroup]);
 
   if (error) {
     return <RouteErrorHandler error={error} />;
@@ -79,6 +90,24 @@ export default function Component(props: SpeciesComponentProps) {
         <TabPanels>
           <TabPanel>
             <LocationProbability />
+            {data?.groups?.length ? (
+              <Select
+                mt={4}
+                size='sm'
+                value={group?.id}
+                onChange={(e) => {
+                  setGroup(
+                    data.groups.find((g) => g.id === e.target.value) || null
+                  );
+                }}
+              >
+                {data.groups.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.name}
+                  </option>
+                ))}
+              </Select>
+            ) : null}
           </TabPanel>
           <TabPanel>
             <p>two!</p>
@@ -89,33 +118,15 @@ export default function Component(props: SpeciesComponentProps) {
   );
 }
 
-function LocationProbability(props) {
+function LocationProbability() {
   return (
     <Flex direction='column' gap={4}>
       <DataSectionHead
         title='Location Probability'
         unit='%'
-        onToggle={console.log}
+        // onToggle={console.log}
       />
-      <LegendBar
-        stops={[
-          { color: '#000004', value: 0 },
-          { color: '#0D0829', value: 7 },
-          { color: '#280B54', value: 14 },
-          { color: '#480B6A', value: 21 },
-          { color: '#65156E', value: 28 },
-          { color: '#82206C', value: 35 },
-          { color: '#9F2A63', value: 42 },
-          { color: '#BB3755', value: 49 },
-          { color: '#D44842', value: 56 },
-          { color: '#E8602D', value: 63 },
-          { color: '#F57D15', value: 70 },
-          { color: '#FB9E07', value: 77 },
-          { color: '#FAC127', value: 84 },
-          { color: '#F3E45C', value: 91 },
-          { color: '#FCFFA4', value: 100 }
-        ]}
-      />
+      <LegendBar stops={getPDFColorLegend()} labels={['Less', 'More']} />
     </Flex>
   );
 }
