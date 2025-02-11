@@ -78,7 +78,7 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@geoarrow/deck.gl-layers": "^0.3.0-beta.17",
-    "@geoarrow/geoarrow-js": "^0.3.1",
+    "@geoarrow/geoarrow-js": "^0.3.2",
     "@hscmap/healpix": "^1.4.12",
     "@tanstack/react-query": "^5.62.2",
     "@turf/bbox": "^7.2.0",
@@ -120,8 +120,5 @@
   "@parcel/resolver-default": {
     "packageExports": true
   },
-  "packageManager": "yarn@4.6.0",
-  "resolutions": {
-    "@geoarrow/geoarrow-js": "portal:/Users/daniel/guts/projects/geoarrow-js"
-  }
+  "packageManager": "yarn@4.6.0"
 }

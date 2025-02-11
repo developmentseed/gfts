@@ -2785,19 +2785,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@geoarrow/geoarrow-js@portal:/Users/daniel/guts/projects/geoarrow-js::locator=gtfs%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@geoarrow/geoarrow-js@portal:/Users/daniel/guts/projects/geoarrow-js::locator=gtfs%40workspace%3A."
+"@geoarrow/geoarrow-js@npm:^0.3.0, @geoarrow/geoarrow-js@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "@geoarrow/geoarrow-js@npm:0.3.2"
   dependencies:
     "@math.gl/polygon": "npm:^4.0.0"
     proj4: "npm:^2.9.2"
     threads: "npm:^1.7.0"
   peerDependencies:
-    "@loaders.gl/schema": "*"
-    "@loaders.gl/wkt": "*"
     apache-arrow: ">=15"
+  checksum: 10c0/93474f19a2f939132fa0c910143c741d55a7ce49fcf6ddc7dfb46bc5bc56a8b74a410315438da505095222c963cf8c46789ffea538a9525b2f9d621649ad5ca5
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@hscmap/healpix@npm:^1.4.12":
   version: 1.4.12
@@ -10267,7 +10266,7 @@ __metadata:
     "@emotion/react": "npm:^11.13.3"
     "@emotion/styled": "npm:^11.13.0"
     "@geoarrow/deck.gl-layers": "npm:^0.3.0-beta.17"
-    "@geoarrow/geoarrow-js": "npm:^0.3.1"
+    "@geoarrow/geoarrow-js": "npm:^0.3.2"
     "@hscmap/healpix": "npm:^1.4.12"
     "@parcel/optimizer-data-url": "npm:2.13.2"
     "@parcel/reporter-bundle-analyzer": "npm:^2.11.0"
