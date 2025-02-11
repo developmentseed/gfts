@@ -1,0 +1,11 @@
+
+{
+  "id": "tuna",
+  "name": "Tuna",
+  "region": "Pacific Ocean",
+  "image": "http://picsum.photos/150?v=5",
+  "coords": [
+    150.6917,
+    35.6895
+  ]
+}
