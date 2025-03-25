@@ -1,24 +1,21 @@
 # This workflow performs basic checks:
 #
 #   1. run a preparation step to install and cache node modules
-#   2. once prep succeeds, lint and test run in parallel
+#   2. once prep succeeds, run lint and test in parallel
 #
-# The checks only run on non-draft Pull Requests. They don't run on the main
-# branch prior to deploy. It's recommended to use branch protection to avoid
-# pushes straight to 'main'.
+# The checks are skipped on the 'main' branch. The project relies on branch
+# protection to avoid pushes straight to 'main'.
 
 name: Checks
 
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - ready_for_review
+  push:
+    branches-ignore:
+    - 'main'
 
-env:
-  NODE: 18
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   prep:
@@ -26,28 +23,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ env.NODE }}
-        uses: actions/setup-node@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE }}
+          node-version-file: '.nvmrc'
 
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-node-modules
         with:
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
 
       - name: Install
-        run: yarn install
+        run: corepack enable && yarn install
 
   lint:
     needs: prep
@@ -55,25 +47,26 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ env.NODE }}
-        uses: actions/setup-node@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE }}
+          node-version-file: '.nvmrc'
 
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-node-modules
         with:
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
 
       - name: Install
-        run: yarn install
+        run: corepack enable && yarn install
 
       - name: Lint
         run: yarn lint
+
 
   test:
     needs: prep
@@ -81,22 +74,22 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ env.NODE }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE }}
 
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-node-modules
         with:
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
 
       - name: Install
-        run: yarn install
+        run: corepack enable && yarn install
 
       - name: Test
         run: yarn test
