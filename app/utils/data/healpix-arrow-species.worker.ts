@@ -58,7 +58,6 @@ expose(async (url: string, nside: number) => {
     ['color', colorsArrow]
   ]);
 
-  // @ts-expect-error structData type error
   const [structPrep, structBuffArray] = worker.preparePostMessage(struct);
 
   // eslint-disable-next-line no-console
