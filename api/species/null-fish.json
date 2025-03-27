@@ -1,0 +1,11 @@
+
+{
+  "id": "null-fish",
+  "name": "Null Fish",
+  "region": "Null island",
+  "image": "/api/species/null.jpg",
+  "coords": [
+    0,
+    0
+  ]
+}
