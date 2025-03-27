@@ -42,7 +42,6 @@ export function SpeciesPDF() {
       new GeoArrowSolidPolygonLayer({
         id: `geoarrow-species-polygons-${group.id}`,
         data: rawArrowData.table,
-        // @ts-expect-error is not assignable to type 'undefined'
         getPolygon: rawArrowData.table.getChild('geometry')!,
         _normalize: false,
         getFillColor: rawArrowData.table.getChild('color')!

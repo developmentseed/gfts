@@ -48,6 +48,27 @@ export function getAlphaColor(
 }
 
 /**
+ * Computes the extent of an array of numerical values.
+ * Computed this way instead of Math.min and Math.max because chrome only
+ * handles a certain number of arguments.
+ *
+ * @param arr - An array of numbers.
+ * @returns A tuple representing the minimum and maximum values in the input array.
+ */
+function getExtent(arr: ArrayLike<number>) {
+  let len = arr.length;
+  let max = -Infinity;
+  let min = Infinity;
+
+  while (len--) {
+    max = arr[len] > max ? arr[len] : max;
+    min = arr[len] < min ? arr[len] : min;
+  }
+
+  return [min, max];
+}
+
+/**
  * Computes a color buffer from an array of numerical values.
  *
  * @param values - An array of numbers representing the values to be converted
@@ -63,11 +84,7 @@ export function getAlphaColor(
 export function computeColorBuffer(values: ArrayLike<number>) {
   const allValArray = Array.from(values);
   const colors = new Uint8Array(allValArray.length * 4);
-
-  const valueExtent = [
-    Math.min.apply(null, Array.from(allValArray)),
-    Math.max.apply(null, Array.from(allValArray))
-  ];
+  const valueExtent = getExtent(allValArray);
 
   for (let i = 0; i < values.length; i++) {
     const v = values[i];

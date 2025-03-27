@@ -1,3 +1,5 @@
+/* global module, require */
+
 // Aaaand what's happening here you ask?
 // Well, here we go...
 
@@ -27,6 +29,7 @@
 
 // PR to fix the issue: https://github.com/andywer/threads.js/pull/495
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const threads = require('node_modules/threads/dist/index.js');
 module.exports = threads;
 module.exports.default = threads;

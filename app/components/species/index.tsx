@@ -13,6 +13,8 @@ import {
 import { CollecticonChevronLeftSmall } from '@devseed-ui/collecticons-chakra';
 import { useQuery } from '@tanstack/react-query';
 
+import { requestSpeciesArrowFn } from './data';
+
 import SmartLink from '$components/common/smart-link';
 import { PanelHeader } from '$components/common/panel-header';
 import { getJsonFn, Species } from '$utils/api';
@@ -49,8 +51,14 @@ export default function Component(props: SpeciesComponentProps) {
     }
   }, [data, setGroup]);
 
-  if (error) {
-    return <RouteErrorHandler error={error} />;
+  const { error: dataError } = useQuery({
+    enabled: !!group?.id,
+    queryKey: ['species', id, 'arrow', group?.id],
+    queryFn: requestSpeciesArrowFn(group?.file)
+  });
+
+  if (error || dataError) {
+    return <RouteErrorHandler error={(error || dataError) as Error} />;
   }
 
   return (
