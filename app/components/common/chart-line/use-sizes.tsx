@@ -6,9 +6,9 @@ export const DAY_HEIGHT = 24;
 
 export const PADDING = {
   top: DAY_HEIGHT + 8,
-  right: 36,
+  right: 8,
   bottom: 24,
-  left: 50
+  left: 40
 };
 
 export function useSizes() {
