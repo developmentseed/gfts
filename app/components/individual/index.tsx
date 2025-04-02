@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { Suspense, useMemo, useState } from 'react';
 import {
   Box,
+  Divider,
   Flex,
   IconButton,
   Skeleton,
@@ -33,6 +34,8 @@ import { changeValue } from '$utils/format';
 import { useRafEffect } from '$utils/use-raf-effect-hook';
 import { StringChart } from '$components/common/chart-string';
 import { getPDFColorLegend } from '$utils/data/color';
+
+const ChartsSection = React.lazy(() => import('./charts'));
 
 interface SpeciesComponentProps {
   params: {
@@ -104,7 +107,7 @@ export default function Component(props: SpeciesComponentProps) {
   }
 
   return (
-    <Box w='100%'>
+    <Flex w='100%' direction='column'>
       <PanelHeader
         suptitle='Explore'
         heading={
@@ -132,13 +135,25 @@ export default function Component(props: SpeciesComponentProps) {
         }
       />
 
-      <Tabs size='sm' colorScheme='base' mx={-4}>
+      <Tabs
+        size='sm'
+        colorScheme='base'
+        mx={-4}
+        display='flex'
+        flexDirection='column'
+        minHeight={0}
+      >
         <TabList>
           <Tab fontWeight='bold'>Visualize</Tab>
           <Tab fontWeight='bold'>Learn</Tab>
         </TabList>
 
-        <TabPanels>
+        <TabPanels
+          display='flex'
+          flexDirection='column'
+          minHeight={0}
+          overflowY='scroll'
+        >
           <TabPanel>
             {isArrowFetching && (
               <Flex direction='column' gap={2}>
@@ -152,17 +167,19 @@ export default function Component(props: SpeciesComponentProps) {
                 </Flex>
               </Flex>
             )}
-            {arrowDates && (
-              <>
-                <LocationProbability />
-                <StringChart
-                  selectedDay={selectedDay}
-                  data={arrowDates}
-                  onDaySelect={setSelectedDay}
-                  panZoomValue={panZoomValue}
-                  onPanZoomValueChange={setPanZoomValue}
-                />
-                <Flex gap={2} mt={4}>
+            {rawArrowData && arrowDates && (
+              <Flex direction='column' gap={4}>
+                <Box>
+                  <LocationProbability />
+                  <StringChart
+                    selectedDay={selectedDay}
+                    data={arrowDates}
+                    onDaySelect={setSelectedDay}
+                    panZoomValue={panZoomValue}
+                    onPanZoomValueChange={setPanZoomValue}
+                  />
+                </Box>
+                <Flex gap={2}>
                   <IconButton
                     size='sm'
                     variant='outline'
@@ -201,7 +218,17 @@ export default function Component(props: SpeciesComponentProps) {
                     }}
                   />
                 </Flex>
-              </>
+
+                <Divider borderColor='base.100' borderBottomWidth='2px' />
+
+                <Suspense fallback={<p />}>
+                  <ChartsSection
+                    arrowData={rawArrowData}
+                    selectedDay={selectedDay}
+                    onDaySelect={setSelectedDay}
+                  />
+                </Suspense>
+              </Flex>
             )}
           </TabPanel>
           <TabPanel>
@@ -209,7 +236,7 @@ export default function Component(props: SpeciesComponentProps) {
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </Box>
+    </Flex>
   );
 }
 
