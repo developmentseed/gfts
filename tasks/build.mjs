@@ -34,7 +34,7 @@ async function copyFiles() {
   log.info('📦 Copied static files to dist.');
 }
 
-async function parcelServe() {
+async function parcelBuild() {
   const bundler = new Parcel({
     entries: `${__dirname}/../app/index.html`,
     defaultConfig: `${__dirname}/../.parcelrc`,
@@ -62,4 +62,4 @@ async function parcelServe() {
 }
 
 copyFiles();
-parcelServe();
+parcelBuild();
