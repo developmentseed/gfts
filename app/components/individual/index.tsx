@@ -33,6 +33,7 @@ import { changeValue } from '$utils/format';
 import { useRafEffect } from '$utils/use-raf-effect-hook';
 import { StringChart } from '$components/common/chart-string';
 import { getPDFColorLegend } from '$utils/data/color';
+import { MdContent } from '$components/common/md-content';
 
 interface SpeciesComponentProps {
   params: {
@@ -132,7 +133,7 @@ export default function Component(props: SpeciesComponentProps) {
         }
       />
 
-      <Tabs size='sm' colorScheme='base' mx={-4}>
+      <Tabs size='sm' colorScheme='base' mx={-4} isLazy>
         <TabList>
           <Tab fontWeight='bold'>Visualize</Tab>
           <Tab fontWeight='bold'>Learn</Tab>
@@ -205,7 +206,7 @@ export default function Component(props: SpeciesComponentProps) {
             )}
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <MdContent url={`/data/${id}/${id}.md`} />
           </TabPanel>
         </TabPanels>
       </Tabs>

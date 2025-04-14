@@ -23,6 +23,7 @@ import { DataSectionHead } from '$components/common/data-section-head';
 import { RouteErrorHandler } from '$components/common/error';
 import { useSpeciesContext } from '$components/common/app-context';
 import { getPDFColorLegend } from '$utils/data/color';
+import { MdContent } from '$components/common/md-content';
 
 interface SpeciesComponentProps {
   params: {
@@ -44,6 +45,7 @@ export default function Component(props: SpeciesComponentProps) {
     queryKey: ['species', id],
     queryFn: getJsonFn(`/api/species/${id}.json`)
   });
+
 
   useEffect(() => {
     if (data?.groups?.length) {
@@ -89,7 +91,7 @@ export default function Component(props: SpeciesComponentProps) {
           )
         }
       />
-      <Tabs size='sm' colorScheme='base' mx={-4}>
+      <Tabs size='sm' colorScheme='base' mx={-4} isLazy>
         <TabList>
           <Tab fontWeight='bold'>Visualize</Tab>
           <Tab fontWeight='bold'>Learn</Tab>
@@ -118,7 +120,7 @@ export default function Component(props: SpeciesComponentProps) {
             ) : null}
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <MdContent url={data?.descriptionMdSrc} />
           </TabPanel>
         </TabPanels>
       </Tabs>
