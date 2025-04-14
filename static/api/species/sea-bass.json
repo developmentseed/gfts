@@ -4,6 +4,7 @@
   "name": "Sea Bass",
   "region": "Mediterranean",
   "image": "/api/species/seabass.jpg",
+  "descriptionMdSrc": "/api/species/seabass.md", 
   "coords": [
     -6,
     47

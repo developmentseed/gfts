@@ -49,19 +49,6 @@ export function requestIndividualParquetFn(id: string) {
   };
 }
 
-export async function requestIndividualMdFn(id: string): Promise<string> {
-  const url = `${process.env.DATA_API}/data/${id}/${id}.md`;
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Failed to load the md file for id tag "${id}".`);
-    const text = await response.text();
-    return text;
-  } catch (error) {
-    console.error(error);
-    return 'Failed to load content.';
-  }
-}
-
 export function requestIndividualArrowFn(id: string) {
   return async () => {
     const url = `${process.env.DATA_API}/data/${id}/${id}_healpix.parquet`;

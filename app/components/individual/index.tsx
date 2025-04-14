@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   Box,
   Flex,
@@ -18,7 +18,7 @@ import {
 } from '@devseed-ui/collecticons-chakra';
 import { useQuery } from '@tanstack/react-query';
 
-import { requestIndividualArrowFn, requestIndividualMdFn } from './data';
+import { requestIndividualArrowFn } from './data';
 import { useDaySelect } from './utils';
 
 import SmartLink from '$components/common/smart-link';
@@ -33,8 +33,7 @@ import { changeValue } from '$utils/format';
 import { useRafEffect } from '$utils/use-raf-effect-hook';
 import { StringChart } from '$components/common/chart-string';
 import { getPDFColorLegend } from '$utils/data/color';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { MdContent } from '$components/common/md-content';
 
 interface SpeciesComponentProps {
   params: {
@@ -52,15 +51,6 @@ export default function Component(props: SpeciesComponentProps) {
 
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const { setCurrentPDFIndex } = useIndividualContext();
-  const [mdContent, setMdContent] = useState('Loading content...');
-
-  useEffect(() => {
-    const fetchMd = async () => {
-      const content = await requestIndividualMdFn(id);
-      setMdContent(content);
-    };
-    fetchMd();
-  }, [id]);
 
   const { data, isSuccess, error } = useQuery<
     IndividualListed[],
@@ -143,7 +133,7 @@ export default function Component(props: SpeciesComponentProps) {
         }
       />
 
-      <Tabs size='sm' colorScheme='base' mx={-4}>
+      <Tabs size='sm' colorScheme='base' mx={-4} isLazy>
         <TabList>
           <Tab fontWeight='bold'>Visualize</Tab>
           <Tab fontWeight='bold'>Learn</Tab>
@@ -216,7 +206,7 @@ export default function Component(props: SpeciesComponentProps) {
             )}
           </TabPanel>
           <TabPanel>
-            <Markdown remarkPlugins={[remarkGfm]}>{mdContent}</Markdown>
+            <MdContent url={`/data/${id}/${id}.md`} />
           </TabPanel>
         </TabPanels>
       </Tabs>
