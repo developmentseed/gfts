@@ -19,12 +19,15 @@ import { Link, LinkProps, Route, Switch, useRoute } from 'wouter';
 import SmartLink from './smart-link';
 import Logo from './logo';
 import { AppContextProvider } from '$components/common/app-context';
+import { UserInfo } from '$components/auth/userInfo';
 
 const Home = React.lazy(() => import('../home/'));
 const Search = React.lazy(() => import('../search/'));
 const Species = React.lazy(() => import('../species/'));
 const IndividualSingle = React.lazy(() => import('../individual/'));
-const IndividualSingleExplore = React.lazy(() => import('../individual/explore-data'));
+const IndividualSingleExplore = React.lazy(
+  () => import('../individual/explore-data')
+);
 
 const MbMap = React.lazy(() => import('./mb-map'));
 
@@ -83,6 +86,9 @@ export default function PageLayout() {
                     </NavButton>
                   </ListItem>
                 </List>
+              </Box>
+              <Box mt='auto'>
+                <UserInfo />
               </Box>
             </Flex>
             <Flex as='main' bg='surface.500' borderRadius='md' w='100%' p={4}>

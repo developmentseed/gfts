@@ -7,6 +7,7 @@ import { Router } from 'wouter';
 import theme from '$styles/theme';
 
 import PageLayout from '$components/common/page-layout';
+import { KeycloakProvider } from '$components/auth/context';
 
 const publicUrl = process.env.PUBLIC_URL || '';
 
@@ -33,21 +34,23 @@ function Root() {
   }, []);
 
   return (
-    <ChakraProvider theme={theme} resetCSS>
-      <QueryClientProvider client={queryClient}>
-        <Router
-          base={
-            new URL(
-              publicUrl.startsWith('http')
-                ? publicUrl
-                : `https://ds.io/${publicUrl.replace(/^\//, '')}`
-            ).pathname
-          }
-        >
-          <PageLayout />
-        </Router>
-      </QueryClientProvider>
-    </ChakraProvider>
+    <KeycloakProvider>
+      <ChakraProvider theme={theme} resetCSS>
+        <QueryClientProvider client={queryClient}>
+          <Router
+            base={
+              new URL(
+                publicUrl.startsWith('http')
+                  ? publicUrl
+                  : `https://ds.io/${publicUrl.replace(/^\//, '')}`
+              ).pathname
+            }
+          >
+            <PageLayout />
+          </Router>
+        </QueryClientProvider>
+      </ChakraProvider>
+    </KeycloakProvider>
   );
 }
 
