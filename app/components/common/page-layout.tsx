@@ -22,6 +22,7 @@ import SmartLink from './smart-link';
 import Logo from './logo';
 import { PageFooter } from './page-footer';
 import { AppContextProvider } from '$components/common/app-context';
+import { UserInfo } from '$components/auth/userInfo';
 
 const Home = React.lazy(() => import('../home/'));
 const Search = React.lazy(() => import('../search/'));
@@ -85,6 +86,9 @@ export default function PageLayout() {
                     </NavButton>
                   </ListItem>
                 </List>
+              </Box>
+              <Box mt='auto'>
+                <UserInfo />
               </Box>
             </Flex>
             <Flex
