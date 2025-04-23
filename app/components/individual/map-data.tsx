@@ -35,7 +35,6 @@ export function IndividualPDF() {
       new GeoArrowSolidPolygonLayer({
         id: 'geoarrow-polygons',
         data: rawArrowData.table,
-        // @ts-expect-error is not assignable to type 'undefined'
         getPolygon: rawArrowData.table.getChild('geometry')!,
         _normalize: false,
         getFillColor: rawArrowData.table.getChild('color')!,
