@@ -16,14 +16,19 @@ import {
   CollecticonMap
 } from '@devseed-ui/collecticons-chakra';
 import { Link, LinkProps, Route, Switch, useRoute } from 'wouter';
+import Home from '../home/';
+import Search from '../search/';
+import Species from '../species/';
+import IndividualSingle from '../individual/';
+
 import SmartLink from './smart-link';
 import Logo from './logo';
 import { AppContextProvider } from '$components/common/app-context';
 
-const Home = React.lazy(() => import('../home/'));
-const Search = React.lazy(() => import('../search/'));
-const Species = React.lazy(() => import('../species/'));
-const IndividualSingle = React.lazy(() => import('../individual/'));
+// const Home = React.lazy(() => import('../home/'));
+// const Search = React.lazy(() => import('../search/'));
+// const Species = React.lazy(() => import('../species/'));
+// const IndividualSingle = React.lazy(() => import('../individual/'));
 
 const MbMap = React.lazy(() => import('./mb-map'));
 
@@ -92,14 +97,14 @@ export default function PageLayout() {
               p={4}
               flex='1'
             >
-              <Suspense fallback={<Loading />}>
+              {/* <Suspense fallback={<Loading />}> */}
                 <Switch>
                   <Route path='/' component={Home} />
                   <Route path='/species/:id' component={Species} />
                   <Route path='/individual/:id' component={IndividualSingle} />
                   <Route path='/search' component={Search} />
                 </Switch>
-              </Suspense>
+              {/* </Suspense> */}
             </Flex>
           </Flex>
           <Box flex='1'>
@@ -137,9 +142,9 @@ export default function PageLayout() {
   );
 }
 
-function Loading() {
-  return <Box>Loading...</Box>;
-}
+// function Loading() {
+//   return <Box>Loading...</Box>;
+// }
 
 function MapLoading() {
   return (
