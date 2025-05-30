@@ -10,16 +10,6 @@
     ]
   },
   {
-    "id": "sea-bream",
-    "name": "Sea Bream",
-    "region": "Mediterranean",
-    "image": "/api/species/seabream.jpg",
-    "coords": [
-      4.8357,
-      39.7640
-    ]
-  },
-  {
     "id": "pollock",
     "name": "Pollock",
     "region": "Cost of France",
@@ -27,56 +17,6 @@
     "coords": [
       -4.3698,
       48.2965
-    ]
-  },
-  {
-    "id": "salmon",
-    "name": "Salmon",
-    "region": "North Atlantic",
-    "image": "/api/species/salmon.jpg",
-    "coords": [
-      -20.2603,
-      60.3498
-    ]
-  },
-  {
-    "id": "tuna",
-    "name": "Tuna",
-    "region": "Pacific Ocean",
-    "image": "http://picsum.photos/150?v=5",
-    "coords": [
-      150.6917,
-      35.6895
-    ]
-  },
-  {
-    "id": "cod",
-    "name": "Cod",
-    "region": "North Sea",
-    "image": "http://picsum.photos/150?v=6",
-    "coords": [
-      1.3522,
-      58.8566
-    ]
-  },
-  {
-    "id": "mackerel",
-    "name": "Mackerel",
-    "region": "Indian Ocean",
-    "image": "http://picsum.photos/150?v=7",
-    "coords": [
-      77.2090,
-      -20.6139
-    ]
-  },
-  {
-    "id": "null-fish",
-    "name": "Null Fish",
-    "region": "Null island",
-    "image": "/api/species/null.jpg",
-    "coords": [
-      0,
-      0
     ]
   }
 ]

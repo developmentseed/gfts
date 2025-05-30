@@ -2,10 +2,32 @@
 {
   "id": "pollock",
   "name": "Pollock",
-  "region": "Cost of France",
+  "region": "North west Atlantic",
   "image": "/api/species/pollock.jpg",
   "coords": [
-    -4.3698,
-    48.2965
+    -4.4659,
+    48.9041
+  ],
+  "groups": [
+    {
+      "id": "q1",
+      "name": "1st Quarter",
+      "file": "/data/pollock/pollock_average_q0.parquet"
+    },
+    {
+      "id": "q2",
+      "name": "2nd Quarter",
+      "file": "/data/pollock/pollock_average_q1.parquet?v2"
+    },
+    {
+      "id": "q3",
+      "name": "3rd Quarter",
+      "file": "/data/pollock/pollock_average_q2.parquet?v2"
+    },
+    {
+      "id": "q4",
+      "name": "4th Quarter",
+      "file": "/data/pollock/pollock_average_q3.parquet"
+    }
   ]
 }

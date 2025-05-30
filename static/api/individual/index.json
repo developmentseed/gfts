@@ -319,5 +319,12 @@
   { "id": "SQ_A10740", "species": "Sea Bass" },
   { "id": "SQ_A10786", "species": "Sea Bass" },
   { "id": "SQ_A10788", "species": "Sea Bass" },
-  { "id": "SQ_A10790", "species": "Sea Bass" }
+  { "id": "SQ_A10790", "species": "Sea Bass" },
+  { "id": "A18828", "species": "Pollock" },
+  { "id": "A18831", "species": "Pollock" },
+  { "id": "A18832", "species": "Pollock" },
+  { "id": "A18857", "species": "Pollock" },
+  { "id": "A19051", "species": "Pollock" },
+  { "id": "A19056", "species": "Pollock" },
+  { "id": "A19124", "species": "Pollock" }
 ]

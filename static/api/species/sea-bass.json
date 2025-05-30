@@ -2,11 +2,11 @@
 {
   "id": "sea-bass",
   "name": "Sea Bass",
-  "region": "Mediterranean",
+  "region": "North west Atlantic",
   "image": "/api/species/seabass.jpg",
   "coords": [
-    -6,
-    47
+    -2.7416,
+    45.9850
   ],
   "groups": [
     {
@@ -17,12 +17,12 @@
     {
       "id": "q2",
       "name": "2nd Quarter",
-      "file": "/data/sea-bass/sea_bass_average_q1.parquet?v2"
+      "file": "/data/sea-bass/sea_bass_average_q1.parquet"
     },
     {
       "id": "q3",
       "name": "3rd Quarter",
-      "file": "/data/sea-bass/sea_bass_average_q2.parquet?v2"
+      "file": "/data/sea-bass/sea_bass_average_q2.parquet"
     },
     {
       "id": "q4",
