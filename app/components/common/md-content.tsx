@@ -1,4 +1,15 @@
-import { Box, Skeleton, SkeletonText } from '@chakra-ui/react';
+import {
+  Box,
+  Skeleton,
+  SkeletonText,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr
+} from '@chakra-ui/react';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getMdFn } from '$utils/api';
@@ -15,6 +26,20 @@ function usePromise<T>(promise: Promise<T>) {
 
   return value;
 }
+
+const markdownComponents = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  table: ({ node, ...props }) => (
+    <TableContainer>
+      <Table size='sm' {...props} />
+    </TableContainer>
+  ),
+  tr: Tr,
+  td: Td,
+  th: Th,
+  thead: Thead,
+  tbody: Tbody
+};
 
 interface MdContentProps {
   url?: string;
@@ -56,7 +81,12 @@ export function MdContent(props: MdContentProps) {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Markdown remarkPlugins={[remarkGfmPlugin.default]}>{data}</Markdown>
+      <Markdown
+        remarkPlugins={[remarkGfmPlugin.default]}
+        components={markdownComponents}
+      >
+        {data}
+      </Markdown>
     </Suspense>
   );
 }

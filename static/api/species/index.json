@@ -11,16 +11,6 @@
     ]
   },
   {
-    "id": "sea-bream",
-    "name": "Sea Bream",
-    "region": "Mediterranean",
-    "image": "/api/species/seabream.jpg",
-    "coords": [
-      4.8357,
-      39.7640
-    ]
-  },
-  {
     "id": "pollock",
     "name": "Pollock",
     "region": "Cost of France",
@@ -28,26 +18,6 @@
     "coords": [
       -4.3698,
       48.2965
-    ]
-  },
-  {
-    "id": "salmon",
-    "name": "Salmon",
-    "region": "North Atlantic",
-    "image": "/api/species/salmon.jpg",
-    "coords": [
-      -20.2603,
-      60.3498
-    ]
-  },
-  {
-    "id": "null-fish",
-    "name": "Null Fish",
-    "region": "Null island",
-    "image": "/api/species/null.jpg",
-    "coords": [
-      0,
-      0
     ]
   }
 ]
