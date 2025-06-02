@@ -62,7 +62,7 @@ export function MdContent(props: MdContentProps) {
   });
 
   if (error instanceof NotFound) {
-    return 'This was not a well know individual. Nothing to learn about this fish.';
+    return 'This was not a well-known individual. Nothing to learn about this fish.';
   }
 
   if (isLoading || !remarkGfmPlugin) {
