@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { NotFound } from './error/not-found';
 import { getMdFn } from '$utils/api';
 
 const Markdown = React.lazy(() => import('react-markdown'));
@@ -53,8 +54,16 @@ export function MdContent(props: MdContentProps) {
   const { data, error, isLoading } = useQuery({
     enabled: !!url,
     queryKey: ['markdown', url || 'n/a'],
-    queryFn: getMdFn(url || '')
+    queryFn: getMdFn(url || ''),
+    retry(failureCount, error) {
+      // Retry only if the error is a NotFound error
+      return error instanceof NotFound ? false : failureCount < 3;
+    }
   });
+
+  if (error instanceof NotFound) {
+    return 'This was not a well know individual. Nothing to learn about this fish.';
+  }
 
   if (isLoading || !remarkGfmPlugin) {
     return <Loading />;
