@@ -19,6 +19,7 @@ export interface Species {
   name: string;
   region: string;
   image: string;
+  descriptionMdSrc: string;
   coords: [number, number];
   groups: SpeciesGroup[];
 }
@@ -35,7 +36,7 @@ export interface IndividualParquetItem {
   latitude: number;
 }
 
-export function getJsonFn(url) {
+export function getJsonFn(url: string) {
   return async () => {
     const response = await fetch(`${process.env.DATA_API || ''}${url}`);
 
@@ -48,6 +49,22 @@ export function getJsonFn(url) {
       return json;
     } catch (error) {
       throw new NotFound('Resource not found', { url });
+    }
+  };
+}
+
+export function getMdFn(url: string) {
+  return async () => {
+    const response = await fetch(`${process.env.DATA_API || ''}${url}`);
+
+    try {
+      if (!response.ok) {
+        throw new Error();
+      }
+      const text = await response.text();
+      return text;
+    } catch (error) {
+      throw new Error(`Failed to load the md file for "${url}".`);
     }
   };
 }

@@ -34,6 +34,7 @@ import { changeValue } from '$utils/format';
 import { useRafEffect } from '$utils/use-raf-effect-hook';
 import { StringChart } from '$components/common/chart-string';
 import { getPDFColorLegend } from '$utils/data/color';
+import { MdContent } from '$components/common/md-content';
 
 const ChartsSection = React.lazy(() => import('./charts'));
 
@@ -135,14 +136,15 @@ export default function Component(props: SpeciesComponentProps) {
         }
       />
 
-      <Tabs
+      {/* <Tabs
         size='sm'
         colorScheme='base'
         mx={-4}
         display='flex'
         flexDirection='column'
         minHeight={0}
-      >
+      > */}
+      <Tabs size='sm' colorScheme='base' mx={-4} isLazy>
         <TabList>
           <Tab fontWeight='bold'>Visualize</Tab>
           <Tab fontWeight='bold'>Learn</Tab>
@@ -232,7 +234,7 @@ export default function Component(props: SpeciesComponentProps) {
             )}
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <MdContent url={`/data/${id}/${id}.md`} />
           </TabPanel>
         </TabPanels>
       </Tabs>

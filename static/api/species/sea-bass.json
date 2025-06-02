@@ -4,6 +4,7 @@
   "name": "Sea Bass",
   "region": "North west Atlantic",
   "image": "/api/species/seabass.jpg",
+  "descriptionMdSrc": "/api/species/seabass.md", 
   "coords": [
     -2.7416,
     45.9850

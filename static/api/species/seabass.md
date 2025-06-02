@@ -1,0 +1,2 @@
+This is some information about the **seabass** species.
+Seabass is commonly found in both saltwater and freshwater environments, making it a versatile species for fishing and aquaculture. It is also known for its firm flesh and ability to hold up well in various cooking methods.
