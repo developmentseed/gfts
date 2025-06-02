@@ -4,6 +4,7 @@
     "name": "Sea Bass",
     "region": "Mediterranean",
     "image": "/api/species/seabass.jpg",
+    "descriptionMdSrc": "/api/species/seabass.md", 
     "coords": [
       -6,
       47
@@ -37,36 +38,6 @@
     "coords": [
       -20.2603,
       60.3498
-    ]
-  },
-  {
-    "id": "tuna",
-    "name": "Tuna",
-    "region": "Pacific Ocean",
-    "image": "http://picsum.photos/150?v=5",
-    "coords": [
-      150.6917,
-      35.6895
-    ]
-  },
-  {
-    "id": "cod",
-    "name": "Cod",
-    "region": "North Sea",
-    "image": "http://picsum.photos/150?v=6",
-    "coords": [
-      1.3522,
-      58.8566
-    ]
-  },
-  {
-    "id": "mackerel",
-    "name": "Mackerel",
-    "region": "Indian Ocean",
-    "image": "http://picsum.photos/150?v=7",
-    "coords": [
-      77.2090,
-      -20.6139
     ]
   },
   {
