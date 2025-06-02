@@ -135,27 +135,21 @@ export default function Component(props: SpeciesComponentProps) {
           )
         }
       />
-
-      {/* <Tabs
+      <Tabs
         size='sm'
         colorScheme='base'
         mx={-4}
+        isLazy
         display='flex'
         flexDirection='column'
         minHeight={0}
-      > */}
-      <Tabs size='sm' colorScheme='base' mx={-4} isLazy>
+      >
         <TabList>
           <Tab fontWeight='bold'>Visualize</Tab>
           <Tab fontWeight='bold'>Learn</Tab>
         </TabList>
 
-        <TabPanels
-          display='flex'
-          flexDirection='column'
-          minHeight={0}
-          overflowY='scroll'
-        >
+        <TabPanels overflowY='scroll'>
           <TabPanel>
             {isArrowFetching && (
               <Flex direction='column' gap={2}>

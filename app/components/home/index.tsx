@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Badge,
   Box,
+  Flex,
   Heading,
   Image,
   List,
@@ -26,7 +27,7 @@ export default function Component() {
   });
 
   return (
-    <Box w='100%'>
+    <Flex direction='column' width='100%'>
       <PanelHeader
         suptitle='Explore'
         heading={
@@ -47,7 +48,13 @@ export default function Component() {
         borderBottom='1px'
         borderBottomColor='base.100a'
       />
-      <List display='flex' flexDirection='column' gap={4} pt={4}>
+      <List
+        display='flex'
+        flexDirection='column'
+        gap={4}
+        pt={4}
+        overflowY='scroll'
+      >
         {isSuccess
           ? data?.map((species) => (
               <ListItem key={species.id}>
@@ -84,6 +91,6 @@ export default function Component() {
               </ListItem>
             ))}
       </List>
-    </Box>
+    </Flex>
   );
 }
