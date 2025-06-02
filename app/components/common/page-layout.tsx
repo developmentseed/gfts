@@ -20,6 +20,7 @@ import {
 import { Link, LinkProps, Route, Switch, useRoute } from 'wouter';
 import SmartLink from './smart-link';
 import Logo from './logo';
+import { PageFooter } from './page-footer';
 import { AppContextProvider } from '$components/common/app-context';
 
 const Home = React.lazy(() => import('../home/'));
@@ -110,6 +111,7 @@ export default function PageLayout() {
             </Suspense>
           </Box>
         </Flex>
+        <PageFooter />
       </Show>
       <Show below='lg'>
         <Flex
