@@ -8,6 +8,8 @@ import {
   List,
   ListItem,
   Show,
+  Skeleton,
+  SkeletonText,
   Text
 } from '@chakra-ui/react';
 import {
@@ -138,7 +140,13 @@ export default function PageLayout() {
 }
 
 function Loading() {
-  return <Box>Loading...</Box>;
+  return (
+    <Flex direction='column' gap={4} width='100%'>
+      <Skeleton height={6} width='40%' />
+      <Skeleton height={10} width='80%' />
+      <SkeletonText noOfLines={4} spacing='4' width='100%' mt={4} />
+    </Flex>
+  );
 }
 
 function MapLoading() {
