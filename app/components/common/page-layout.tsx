@@ -8,6 +8,8 @@ import {
   List,
   ListItem,
   Show,
+  Skeleton,
+  SkeletonText,
   Text
 } from '@chakra-ui/react';
 import {
@@ -18,6 +20,7 @@ import {
 import { Link, LinkProps, Route, Switch, useRoute } from 'wouter';
 import SmartLink from './smart-link';
 import Logo from './logo';
+import { PageFooter } from './page-footer';
 import { AppContextProvider } from '$components/common/app-context';
 
 const Home = React.lazy(() => import('../home/'));
@@ -108,6 +111,7 @@ export default function PageLayout() {
             </Suspense>
           </Box>
         </Flex>
+        <PageFooter />
       </Show>
       <Show below='lg'>
         <Flex
@@ -138,7 +142,13 @@ export default function PageLayout() {
 }
 
 function Loading() {
-  return <Box>Loading...</Box>;
+  return (
+    <Flex direction='column' gap={4} width='100%'>
+      <Skeleton height={6} width='40%' />
+      <Skeleton height={10} width='80%' />
+      <SkeletonText noOfLines={4} spacing='4' width='100%' mt={4} />
+    </Flex>
+  );
 }
 
 function MapLoading() {

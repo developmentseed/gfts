@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'wouter';
-import { Badge, Box, Heading } from '@chakra-ui/react';
+import { Badge, Box, Flex, Heading } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { Select } from 'chakra-react-select';
 
@@ -74,7 +74,7 @@ export default function Component() {
   }
 
   return (
-    <Box w='100%'>
+    <Flex direction='column' width='100%'>
       <PanelHeader
         suptitle='Explore'
         heading='Individuals'
@@ -95,6 +95,6 @@ export default function Component() {
           />
         )}
       </Box>
-    </Box>
+    </Flex>
   );
 }

@@ -39,6 +39,7 @@ lib-cov
 *.pid
 npm-debug.log
 yarn-error.log
+.yarn
 .parcel-cache
 .env.*
 

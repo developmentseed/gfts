@@ -57,6 +57,10 @@ export function getMdFn(url: string) {
   return async () => {
     const response = await fetch(`${process.env.DATA_API || ''}${url}`);
 
+    if (response.status === 404) {
+      throw new NotFound('Resource not found', { url });
+    }
+
     try {
       if (!response.ok) {
         throw new Error();
