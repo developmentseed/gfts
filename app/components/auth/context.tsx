@@ -21,10 +21,15 @@ const keycloak: Keycloak | undefined = isAuthEnabled
     })
   : undefined;
 
+interface UserProfile {
+  groups: string[];
+  username: string;
+}
+
 export type KeycloakContextProps = {
   initStatus: 'loading' | 'success' | 'error';
   isLoading: boolean;
-  profile?: Keycloak.KeycloakProfile;
+  profile?: UserProfile;
 } & (
   | {
       keycloak: Keycloak;
@@ -44,9 +49,7 @@ const KeycloakContext = createContext<KeycloakContextProps>({
 export const KeycloakProvider = (props: { children: React.ReactNode }) => {
   const [initStatus, setInitStatus] =
     useState<KeycloakContextProps['initStatus']>('loading');
-  const [profile, setProfile] = useState<
-    Keycloak.KeycloakProfile | undefined
-  >();
+  const [profile, setProfile] = useState<UserProfile | undefined>();
 
   const wasInit = useRef(false);
 
@@ -65,9 +68,12 @@ export const KeycloakProvider = (props: { children: React.ReactNode }) => {
           checkLoginIframe: false
         });
         if (keycloak.authenticated) {
-          const profile =
-            await (keycloak.loadUserProfile() as unknown as Promise<Keycloak.KeycloakProfile>);
-          setProfile(profile);
+          // const profile =
+          //   await (keycloak.loadUserProfile() as unknown as Promise<Keycloak.KeycloakProfile>);
+          setProfile({
+            groups: keycloak.idTokenParsed?.access_group || [],
+            username: keycloak.idTokenParsed?.preferred_username || ''
+          });
         }
 
         setInitStatus('success');
