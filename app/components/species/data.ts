@@ -26,7 +26,6 @@ export function requestSpeciesArrowFn(file?: string) {
       new Worker(
         new URL(
           '../../utils/data/healpix-arrow-species.worker.ts',
-          // @ts-expect-error - This is a dynamic import.
           import.meta.url
         ),
         {
@@ -51,7 +50,6 @@ export function requestDestineArrowFn(file?: string) {
       new Worker(
         new URL(
           '../../utils/data/healpix-arrow-destine.worker.ts',
-          // @ts-expect-error - This is a dynamic import.
           import.meta.url
         ),
         {
