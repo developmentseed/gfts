@@ -60,7 +60,7 @@ export default function Component(props: SpeciesComponentProps) {
     params: { id }
   } = props;
   const { hasDPADAccess } = useKeycloak();
-  const { group, setGroup, setDestineYear } = useSpeciesContext();
+  const { group, setGroup, setDestineYear, destineLayer } = useSpeciesContext();
 
 
   const { data, isSuccess, error } = useQuery<Species>({
@@ -87,8 +87,9 @@ export default function Component(props: SpeciesComponentProps) {
     queryFn: requestSpeciesArrowFn(group?.file)
   });
 
+  const destineDataEnabled = !!group?.id && hasDPADAccess && !!destineLayer;
   const { data: destineArrowData } = useQuery({
-    enabled: !!group?.id && hasDPADAccess,
+    enabled: destineDataEnabled,
     queryKey: ['species', id, 'arrow-destine', group?.id],
     queryFn: requestDestineArrowFn(
       `/destine/ifs-nemo-seasonal-${group?.id}.parquet`

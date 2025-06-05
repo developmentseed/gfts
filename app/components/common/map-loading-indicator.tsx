@@ -24,6 +24,7 @@ export function MapLoadingIndicator(props: MapLoadingIndicatorProps) {
         top='50%'
         left='50%'
         transform='translate(0, -50%)'
+        zIndex={1000}
       >
         <CollecticonMap size='4rem' color='primary.600a' />
         <Text textTransform='uppercase'>Loading...</Text>

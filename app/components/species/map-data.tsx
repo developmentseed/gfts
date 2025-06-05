@@ -39,13 +39,16 @@ export function SpeciesPDF() {
     queryFn: requestSpeciesArrowFn(group?.file)
   });
 
-  const { data: destineArrowData } = useQuery({
-    enabled: !!group?.id && hasDPADAccess,
+  const destineDataEnabled = !!group?.id && hasDPADAccess && !!destineLayer;
+  const { data: destineArrowData, isLoading: isDestineLoading } = useQuery({
+    enabled: destineDataEnabled,
     queryKey: ['species', id, 'arrow-destine', group?.id],
     queryFn: requestDestineArrowFn(
       `/destine/ifs-nemo-seasonal-${group?.id}.parquet`
     )
   });
+
+  const isDestineDataLoading = destineDataEnabled && isDestineLoading;
 
   const deckGlLayers = useMemo(() => {
     if (!group?.id) {
@@ -90,7 +93,7 @@ export function SpeciesPDF() {
 
   return (
     <>
-      <MapLoadingIndicator isLoading={isLoading} />
+      <MapLoadingIndicator isLoading={isLoading || isDestineDataLoading} />
       <DeckGLOverlay layers={deckGlLayers} />
     </>
   );
