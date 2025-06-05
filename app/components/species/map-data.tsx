@@ -11,9 +11,11 @@ import { DeckGLOverlay } from '$components/common/deckgl-overlay';
 import { useSpeciesContext } from '$components/common/app-context';
 import { getJsonFn, Species } from '$utils/api';
 import { MapLoadingIndicator } from '$components/common/map-loading-indicator';
+import { useKeycloak } from '$components/auth/context';
 
 export function SpeciesPDF() {
   const { id } = useParams<{ id: string }>();
+    const { hasDPADAccess } = useKeycloak();
   const { group, destineLayer, destineYear } = useSpeciesContext();
   const map = useMap();
 
@@ -35,7 +37,7 @@ export function SpeciesPDF() {
   });
 
   const { data: destineArrowData } = useQuery({
-    enabled: !!group?.id,
+    enabled: !!group?.id && hasDPADAccess,
     queryKey: ['species', id, 'arrow-destine', group?.id],
     queryFn: requestDestineArrowFn(
       `/destine/ifs-nemo-seasonal-${group?.id}.parquet`

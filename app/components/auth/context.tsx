@@ -30,6 +30,7 @@ export type KeycloakContextProps = {
   initStatus: 'loading' | 'success' | 'error';
   isLoading: boolean;
   profile?: UserProfile;
+  hasDPADAccess: boolean;
 } & (
   | {
       keycloak: Keycloak;
@@ -89,7 +90,12 @@ export const KeycloakProvider = (props: { children: React.ReactNode }) => {
   const base = {
     initStatus,
     isLoading: isAuthEnabled && initStatus === 'loading',
-    profile
+    profile,
+    hasDPADAccess: !!(
+      isAuthEnabled &&
+      keycloak?.authenticated &&
+      profile?.groups?.includes('DPAD_Direct_Access')
+    )
   };
 
   return (

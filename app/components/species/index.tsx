@@ -32,6 +32,7 @@ import { useSpeciesContext } from '$components/common/app-context';
 import { getColorLegend } from '$utils/data/color';
 import { MdContent } from '$components/common/md-content';
 import { HealpixArrowDestineData } from '$utils/data/healpix';
+import { useKeycloak } from '$components/auth/context';
 
 const ChartsSection = React.lazy(() => import('./charts'));
 
@@ -58,8 +59,9 @@ export default function Component(props: SpeciesComponentProps) {
   const {
     params: { id }
   } = props;
-
+  const { hasDPADAccess } = useKeycloak();
   const { group, setGroup, setDestineYear } = useSpeciesContext();
+
 
   const { data, isSuccess, error } = useQuery<Species>({
     queryKey: ['species', id],
@@ -67,6 +69,7 @@ export default function Component(props: SpeciesComponentProps) {
   });
 
   const { data: seasonalData } = useQuery({
+    enabled: hasDPADAccess,
     queryKey: ['species', id, 'csv'],
     queryFn: getCsvFn(`/destine/ifs-nemo-${id}-weighted-seasonal.csv`),
     select: selectCsvChartData
@@ -85,7 +88,7 @@ export default function Component(props: SpeciesComponentProps) {
   });
 
   const { data: destineArrowData } = useQuery({
-    enabled: !!group?.id,
+    enabled: !!group?.id && hasDPADAccess,
     queryKey: ['species', id, 'arrow-destine', group?.id],
     queryFn: requestDestineArrowFn(
       `/destine/ifs-nemo-seasonal-${group?.id}.parquet`
