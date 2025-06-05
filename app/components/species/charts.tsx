@@ -28,7 +28,7 @@ export default function Charts(props: {
     <Flex direction='column' gap={4} w='100%'>
       <DataSectionHead
         title='Ocean Surface Temperature'
-        unit='K'
+        unit='ºC'
         hLevel='h3'
         onToggle={(checked) => setDestineLayer(!checked ? 'temperature' : null)}
         checked={destineLayer === 'temperature'}

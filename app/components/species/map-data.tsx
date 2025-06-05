@@ -15,7 +15,7 @@ import { useKeycloak } from '$components/auth/context';
 
 export function SpeciesPDF() {
   const { id } = useParams<{ id: string }>();
-    const { hasDPADAccess } = useKeycloak();
+  const { hasDPADAccess } = useKeycloak();
   const { group, destineLayer, destineYear } = useSpeciesContext();
   const map = useMap();
 
@@ -26,7 +26,10 @@ export function SpeciesPDF() {
 
   useEffect(() => {
     if (data) {
-      map.current?.panTo(data.coords, { offset: [200, 0] });
+      map.current?.flyTo({
+        center: data.coords,
+        zoom: 6
+      });
     }
   }, [data, map]);
 
