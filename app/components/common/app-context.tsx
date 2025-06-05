@@ -13,9 +13,17 @@ interface IndividualContextProps {
   setCurrentPDFIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
+type DestineLayerType = 'temperature' | 'salinity';
+
 interface SpeciesContextProps {
   group: SpeciesGroup | null;
   setGroup: React.Dispatch<React.SetStateAction<SpeciesGroup | null>>;
+  destineLayer: DestineLayerType | null;
+  setDestineLayer: React.Dispatch<
+    React.SetStateAction<DestineLayerType | null>
+  >;
+  destineYear: number | undefined;
+  setDestineYear: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
 interface AppContextProps {
@@ -39,10 +47,18 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const [speciesGroup, setSpeciesGroup] = useState<SpeciesGroup | null>(null);
+  const [destineLayer, setDestineLayer] = useState<DestineLayerType | null>(
+    null
+  );
+  const [destineYear, setDestineYear] = useState<number>();
 
   const speciesContextValue = {
     group: speciesGroup,
-    setGroup: setSpeciesGroup
+    setGroup: setSpeciesGroup,
+    destineLayer,
+    setDestineLayer,
+    destineYear,
+    setDestineYear
   };
 
   useLayoutEffect(() => {

@@ -5,18 +5,29 @@ import { round } from '$utils/format';
 interface LegendBarProps {
   stops: { value: number; color: string }[];
   unit?: string;
-  labels?: string[];
+  labels?: string[] | number[];
+  disabled?: boolean;
 }
 
 export function LegendBar(props: LegendBarProps) {
-  const { stops, unit, labels } = props;
+  const { stops, unit, labels, disabled } = props;
 
   const lastStop = stops[stops.length - 1];
 
   const shadowColor = useToken('colors', 'base.100a');
 
   return (
-    <Box>
+    <Box
+      transition='filter 160ms ease-in-out, opacity 160ms ease-in-out'
+      css={
+        disabled
+          ? {
+              filter: 'grayscale(1)',
+              opacity: '0.64'
+            }
+          : {}
+      }
+    >
       <Box
         aria-hidden
         height={2}

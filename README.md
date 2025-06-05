@@ -23,6 +23,20 @@ Install Node modules:
 yarn install
 ```
 
+### Initialize the Submodules
+The destine data repo is at: https://github.com/developmentseed/gfts-detine-data  
+If you cloned the repository with `git clone --recursive`, you can skip this step. Otherwise, run:
+
+```
+git submodule update --init --recursive
+```
+
+#### How the submodules are used
+The submodule is a private repository that is used to include the Destine data which cannot be publicly shared.
+
+When the app is built, the submodule is copied to the `destine` folder in the `dist` directory. The server will then handle requests to the `destine` folder and block the however is not authenticated.
+**Therefore, even though the data looks like it is freely available, it is actually protected by the server.**
+
 ## Usage
 
 ### Config files
@@ -33,8 +47,8 @@ These files are used to simplify the configuration of the app and should not con
 Run the project locally by copying the `.env` to `.env.local` and setting the following environment variables:
 
 
-| VAR | Description |
-| --- | --- |
+| VAR            | Description              |
+| -------------- | ------------------------ |
 | `MAPBOX_TOKEN` | Mapbox token for the map |
 
 ### Starting the app

@@ -1,13 +1,10 @@
 import { useMemo, useState } from 'react';
 import useDimensions from 'react-cool-dimensions';
 
-export const DAY_WIDTH = 24;
-export const DAY_HEIGHT = 20;
-
 export const PADDING = {
-  top: DAY_HEIGHT + 8,
+  top: 0,
   right: 8,
-  bottom: 24,
+  bottom: 48,
   left: 40
 };
 

@@ -4,7 +4,7 @@ import { Badge, Flex, Heading, Switch } from '@chakra-ui/react';
 interface DataSectionHeadProps {
   title: string;
   unit?: string;
-  onToggle?: () => void;
+  onToggle?: (checked: boolean) => void;
   checked?: boolean;
   hLevel?: ElementType;
 }
@@ -32,7 +32,7 @@ export function DataSectionHead(props: DataSectionHeadProps) {
         <Switch
           colorScheme='primary'
           ml='auto'
-          onChange={onToggle}
+          onChange={() => onToggle(!!checked)}
           isChecked={checked}
         />
       )}

@@ -11,7 +11,7 @@ export default function MbMap() {
   const [viewStateMap, setViewState] = useState({
     longitude: -30.4742,
     latitude: 40.64983,
-    zoom: 4,
+    zoom: 6,
     pitch: 0
   });
 
