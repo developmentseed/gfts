@@ -1,0 +1,34 @@
+
+{
+  "id": "sea-bass-taos",
+  "name": "Sea Bass",
+  "region": "Taos Campaign",
+  "image": "/api/species/seabass.jpg",
+  "descriptionMdSrc": "/api/species/seabass.md", 
+  "coords": [
+    -2.7416,
+    45.9850
+  ],
+  "groups": [
+    {
+      "id": "q1",
+      "name": "1st Quarter",
+      "file": "/data/sea-bass-taos/sea_bass_taos_average_q0.parquet"
+    },
+    {
+      "id": "q2",
+      "name": "2nd Quarter",
+      "file": "/data/sea-bass-taos/sea_bass_taos_average_q1.parquet"
+    },
+    {
+      "id": "q3",
+      "name": "3rd Quarter",
+      "file": "/data/sea-bass-taos/sea_bass_taos_average_q2.parquet"
+    },
+    {
+      "id": "q4",
+      "name": "4th Quarter",
+      "file": "/data/sea-bass-taos/sea_bass_taos_average_q3.parquet"
+    }
+  ]
+}

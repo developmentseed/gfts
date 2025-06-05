@@ -2,7 +2,7 @@
   {
     "id": "sea-bass",
     "name": "Sea Bass",
-    "region": "Mediterranean",
+    "region": "Bargip Campaign",
     "image": "/api/species/seabass.jpg",
     "descriptionMdSrc": "/api/species/seabass.md", 
     "coords": [
@@ -11,9 +11,20 @@
     ]
   },
   {
+    "id": "sea-bass-taos",
+    "name": "Sea Bass",
+    "region": "Taos Campaign",
+    "image": "/api/species/seabass.jpg",
+    "descriptionMdSrc": "/api/species/seabass.md",
+    "coords": [
+      -2.7416,
+      45.9850
+    ]
+  },
+  {
     "id": "pollock",
     "name": "Pollock",
-    "region": "Cost of France",
+    "region": "Taos Campaign",
     "image": "/api/species/pollock.jpg",
     "coords": [
       -4.3698,
