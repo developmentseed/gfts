@@ -1,4 +1,4 @@
-import { spawn } from 'threads';
+import { spawn, Thread } from 'threads';
 
 import {
   HealpixArrowData,
@@ -35,6 +35,7 @@ export function requestSpeciesArrowFn(file?: string) {
     );
 
     const healpixData = await healpixWorker(url, nside);
+    await Thread.terminate(healpixWorker);
     const table = makeHealpixArrowTable<HealpixArrowData>(healpixData.data);
 
     return { table };
@@ -59,6 +60,7 @@ export function requestDestineArrowFn(file?: string) {
     );
 
     const healpixData = await healpixWorker(url, nside);
+    await Thread.terminate(healpixWorker);
     const table = makeHealpixArrowTable<HealpixArrowDestineData>(healpixData.data);
 
     return { table };

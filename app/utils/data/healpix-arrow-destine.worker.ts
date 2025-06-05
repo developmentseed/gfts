@@ -1,5 +1,12 @@
 import { expose, Transfer } from 'threads/worker';
-import { Field, FixedSizeList, Float32, Int16, makeData, Uint8 } from 'apache-arrow';
+import {
+  Field,
+  FixedSizeList,
+  Float32,
+  Int16,
+  makeData,
+  Uint8
+} from 'apache-arrow';
 import { worker } from '@geoarrow/geoarrow-js';
 import parquet from '@dsnp/parquetjs/dist/browser/parquet.cjs.js';
 
@@ -56,7 +63,10 @@ expose(async (url: string, nside: number) => {
   });
 
   const temperatureColorsArrow = makeData({
-    type: new FixedSizeList(4, new Field('rgba', temperatureColorChannels.type, false)),
+    type: new FixedSizeList(
+      4,
+      new Field('rgba', temperatureColorChannels.type, false)
+    ),
     child: temperatureColorChannels
   });
 
@@ -71,7 +81,10 @@ expose(async (url: string, nside: number) => {
   });
 
   const salinityColorsArrow = makeData({
-    type: new FixedSizeList(4, new Field('rgba', salinityColorChannels.type, false)),
+    type: new FixedSizeList(
+      4,
+      new Field('rgba', salinityColorChannels.type, false)
+    ),
     child: salinityColorChannels
   });
 
