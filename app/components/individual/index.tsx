@@ -33,7 +33,7 @@ import { useIndividualContext } from '$components/common/app-context';
 import { changeValue } from '$utils/format';
 import { useRafEffect } from '$utils/use-raf-effect-hook';
 import { StringChart } from '$components/common/chart-string';
-import { getPDFColorLegend } from '$utils/data/color';
+import { getColorLegend } from '$utils/data/color';
 import { MdContent } from '$components/common/md-content';
 
 const ChartsSection = React.lazy(() => import('./charts'));
@@ -244,7 +244,7 @@ function LocationProbability() {
         unit='%'
         // onToggle={console.log}
       />
-      <LegendBar stops={getPDFColorLegend()} labels={['Less', 'More']} />
+      <LegendBar stops={getColorLegend()} labels={['Less', 'More']} />
     </Flex>
   );
 }

@@ -131,13 +131,15 @@ export function getDestineColor(v: number, extent: [number, number]) {
   return [...rgb2array(color), 255];
 }
 
+/**
+ * Generates a color legend for a PDF using a d3 color scale.
  *
  * @returns An array of 15 ticks, each containing a color and its corresponding
- * value. The color is generated using the Viridis color scale, and the value
- * ranges from 0 to 1.
+ * value. The color is generated using the give color scale interpolator, and
+ * the value ranges from 0 to 1.
  */
-export function getPDFColorLegend() {
-  const scale = scaleSequential([0, 1], interpolateViridis);
+export function getColorLegend(interpolator = interpolateViridis) {
+  const scale = scaleSequential([0, 1], interpolator);
 
   return Array.from(Array(15)).map((_, i) => {
     const v = i / 14;
