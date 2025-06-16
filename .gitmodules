@@ -1,0 +1,3 @@
+[submodule "static/destine"]
+	path = static/destine
+	url = git@github.com:developmentseed/gfts-destine-data.git

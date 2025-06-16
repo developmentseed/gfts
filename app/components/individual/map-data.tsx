@@ -79,7 +79,7 @@ export function IndividualLine() {
   useEffect(() => {
     if (data?.line && map.current) {
       map.current?.fitBounds(bbox(data.line) as LngLatBoundsLike, {
-        padding: { top: 20, bottom: 20, left: 100, right: 100 }
+        padding: { top: 200, bottom: 200, left: 100, right: 100 }
       });
     }
   }, [data?.line, map]);

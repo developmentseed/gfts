@@ -6343,6 +6343,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/keycloak-js@npm:^3.4.1":
+  version: 3.4.1
+  resolution: "@types/keycloak-js@npm:3.4.1"
+  dependencies:
+    keycloak-js: "npm:*"
+  checksum: 10c0/acc6384153dbc809ffc803c6245dce44a0cc1235bfa138c216c8eb0c7cedd16558954d192a6fced4f397afadebf09bdb80acec71ab373c71d12a6f70bcf503f9
+  languageName: node
+  linkType: hard
+
 "@types/lodash.mergewith@npm:4.6.9":
   version: 4.6.9
   resolution: "@types/lodash.mergewith@npm:4.6.9"
@@ -7720,9 +7729,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001669":
-  version: 1.0.30001686
-  resolution: "caniuse-lite@npm:1.0.30001686"
-  checksum: 10c0/41748e81c17c1a6a0fd6e515c93c8620004171fe6706027e45f837fde71e97173e85141b0dc11e07d53b4782f3741a6651cb0f7d395cc1c1860892355eabdfa2
+  version: 1.0.30001721
+  resolution: "caniuse-lite@npm:1.0.30001721"
+  checksum: 10c0/fa3a8926899824b385279f1f886fe34c5efb1321c9ece1b9df25c8d567a2706db8450cc5b4d969e769e641593e08ea644909324aba93636a43e4949a75f81c4c
   languageName: node
   linkType: hard
 
@@ -10438,6 +10447,7 @@ __metadata:
     "@turf/bbox": "npm:^7.2.0"
     "@types/d3": "npm:^7.4.3"
     "@types/geojson": "npm:^7946.0.14"
+    "@types/keycloak-js": "npm:^3.4.1"
     "@types/mapbox-gl": "npm:^2.7.20"
     "@types/node": "npm:^22.10.1"
     "@types/react": "npm:^18.3.12"
@@ -10470,6 +10480,7 @@ __metadata:
     jest: "npm:^29.7.0"
     jest-css-modules-transform: "npm:^4.4.2"
     jest-environment-jsdom: "npm:^29.7.0"
+    keycloak-js: "npm:26.1.5"
     mapbox-gl: "npm:^3.1.2"
     parcel: "npm:^2.11.0"
     parcel-resolver-ignore: "npm:^2.2.0"
@@ -12158,6 +12169,20 @@ __metadata:
   version: 4.0.2
   resolution: "kdbush@npm:4.0.2"
   checksum: 10c0/d50183b299c57e2573114e902ab47aed7494be3ca41b66d456779ecc3b2f153f491de341f9609965414784f728894f9a9001152eb9f3a40cd3755521c06a45a3
+  languageName: node
+  linkType: hard
+
+"keycloak-js@npm:*":
+  version: 26.2.0
+  resolution: "keycloak-js@npm:26.2.0"
+  checksum: 10c0/a0c97c29ce90ac689f27dce9c6fed92a353b4d06b4339e03ed1adc663edbbcffac59ac9a55abf18f7df95fa57f08958683c7e8a36bc536791407ef6a02eb0de0
+  languageName: node
+  linkType: hard
+
+"keycloak-js@npm:26.1.5":
+  version: 26.1.5
+  resolution: "keycloak-js@npm:26.1.5"
+  checksum: 10c0/d0050d4de981b2dd0ec33fc906ea30638bf06c76f5087979acff992e443b86d2bacd427f1bc0cbe4c8fc40c3d7756d148caa6af14d2c1a88fb0993cae2762f5e
   languageName: node
   linkType: hard
 

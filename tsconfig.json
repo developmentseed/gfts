@@ -4,6 +4,9 @@
     "strictNullChecks": true,
     "baseUrl": "./",
     "jsx": "react",
+    /* Modules */
+    "module": "ESNext",                                /* Specify what module code is generated. */
+    "moduleResolution": "bundler",   
     "paths": {
       /* Specify a set of entries that re-map imports to additional lookup locations. */
       "$components/*": ["./app/components/*"],

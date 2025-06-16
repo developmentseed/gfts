@@ -6,6 +6,7 @@ import {
   FixedSizeList,
   Float32,
   Float64,
+  Int16,
   List,
   RecordBatch,
   Schema,
@@ -36,6 +37,15 @@ export type HealpixArrowMostProbData = Omit<HealpixArrowData, 'geometry'> & {
   geometry: FixedSizeList<Float32>;
   pressure: Float64;
   temperature: Float64;
+};
+
+export type HealpixArrowDestineData = {
+  year: Int16;
+  geometry: List<List<FixedSizeList<Float32>>>;
+  temperature: Float32;
+  temperatureColor: FixedSizeList<Uint8>;
+  salinity: Float32;
+  salinityColor: FixedSizeList<Uint8>;
 };
 
 /**
@@ -113,9 +123,7 @@ export function healpixId2CenterPoint(
 }
 
 /**
- * Creates an Apache Arrow table from the given columns.
- * @param columns - An object where keys are column names and values are Arrow
- * Data objects.
+ * Creates an Apache Arrow table from data rehydrated from a worker.
  * @returns An Apache Arrow Table.
  */
 export function makeHealpixArrowTable<T extends TypeMap>(data) {
