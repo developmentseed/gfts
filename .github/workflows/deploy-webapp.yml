@@ -1,0 +1,54 @@
+name: Deploy webapp
+concurrency: deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Push Container
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout private submodule
+        uses: actions/checkout@v4
+        with:
+          repository: developmentseed/gfts-destine-data
+          token: ${{ secrets.ACCESS_TOKEN }}
+          path: static/destine
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: 66gc0z34.c1.gra9.container-registry.ovh.net
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: 66gc0z34.c1.gra9.container-registry.ovh.net/gfts/webapp
+          tags: |
+            type=ref,event=branch
+            type=sha,format=short
+            latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            MAPBOX_TOKEN=${{ secrets.MAPBOX_TOKEN }}
+            WEBAPP_URL=${{ secrets.WEBAPP_URL }}
