@@ -11,11 +11,9 @@ import { DeckGLOverlay } from '$components/common/deckgl-overlay';
 import { useSpeciesContext } from '$components/common/app-context';
 import { getJsonFn, Species } from '$utils/api';
 import { MapLoadingIndicator } from '$components/common/map-loading-indicator';
-import { useKeycloak } from '$components/auth/context';
 
 export function SpeciesPDF() {
   const { id } = useParams<{ id: string }>();
-  const { hasDPADAccess } = useKeycloak();
   const { group, destineLayer, destineYear } = useSpeciesContext();
   const map = useMap();
 
@@ -39,7 +37,7 @@ export function SpeciesPDF() {
     queryFn: requestSpeciesArrowFn(group?.file)
   });
 
-  const destineDataEnabled = !!group?.id && hasDPADAccess && !!destineLayer;
+  const destineDataEnabled = !!group?.id && !!destineLayer;
   const { data: destineArrowData, isLoading: isDestineLoading } = useQuery({
     enabled: destineDataEnabled,
     queryKey: ['species', id, 'arrow-destine', group?.id],
