@@ -20,6 +20,8 @@ import {
 import { Link, LinkProps, Route, Switch, useRoute } from 'wouter';
 import SmartLink from './smart-link';
 import Logo from './logo';
+import { RouteErrorHandler } from './error';
+import { NotFound } from './error/not-found';
 import { PageFooter } from './page-footer';
 import { AppContextProvider } from '$components/common/app-context';
 import { UserInfo } from '$components/auth/userInfo';
@@ -105,6 +107,12 @@ export default function PageLayout() {
                   <Route path='/species/:id' component={Species} />
                   <Route path='/individual/:id' component={IndividualSingle} />
                   <Route path='/search' component={Search} />
+                  <Route
+                    path='*'
+                    component={() => (
+                      <RouteErrorHandler error={new NotFound('Page not found')} />
+                    )}
+                  />
                 </Switch>
               </Suspense>
             </Flex>
