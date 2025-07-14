@@ -60,7 +60,6 @@ export default function Component(props: SpeciesComponentProps) {
   } = props;
   const { group, setGroup, setDestineYear, destineLayer } = useSpeciesContext();
 
-
   const { data, isSuccess, error } = useQuery<Species>({
     queryKey: ['species', id],
     queryFn: getJsonFn(`/api/species/${id}.json`)
@@ -86,7 +85,7 @@ export default function Component(props: SpeciesComponentProps) {
 
   const destineDataEnabled = !!group?.id && !!destineLayer;
   const { data: destineArrowData } = useQuery({
-    enabled: destineDataEnabled,
+    enabled: !destineDataEnabled,
     queryKey: ['species', id, 'arrow-destine', group?.id],
     queryFn: requestDestineArrowFn(
       `/destine/ifs-nemo-seasonal-${group?.id}.parquet`
@@ -109,7 +108,7 @@ export default function Component(props: SpeciesComponentProps) {
   }
 
   return (
-    <Box w='100%'>
+    <Flex w='100%' direction='column'>
       <PanelHeader
         suptitle='Explore'
         heading={
@@ -136,13 +135,21 @@ export default function Component(props: SpeciesComponentProps) {
           )
         }
       />
-      <Tabs size='sm' colorScheme='base' mx={-4} isLazy>
+      <Tabs
+        size='sm'
+        colorScheme='base'
+        mx={-4}
+        isLazy
+        display='flex'
+        flexDirection='column'
+        minHeight={0}
+      >
         <TabList>
           <Tab fontWeight='bold'>Visualize</Tab>
           <Tab fontWeight='bold'>Learn</Tab>
         </TabList>
 
-        <TabPanels>
+        <TabPanels overflowY='scroll'>
           <TabPanel>
             <LocationProbability />
             {data?.groups?.length ? (
@@ -182,7 +189,7 @@ export default function Component(props: SpeciesComponentProps) {
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </Box>
+    </Flex>
   );
 }
 
