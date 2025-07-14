@@ -58,7 +58,14 @@ export default function Component(props: SpeciesComponentProps) {
   const {
     params: { id }
   } = props;
-  const { group, setGroup, setDestineYear, destineLayer } = useSpeciesContext();
+  const {
+    group,
+    setGroup,
+    setDestineYear,
+    destineLayer,
+    isLocLayerActive,
+    setLocLayerActive
+  } = useSpeciesContext();
 
   const { data, isSuccess, error } = useQuery<Species>({
     queryKey: ['species', id],
@@ -151,7 +158,12 @@ export default function Component(props: SpeciesComponentProps) {
 
         <TabPanels overflowY='scroll'>
           <TabPanel>
-            <LocationProbability />
+            <LocationProbability
+              onToggle={() => {
+                setLocLayerActive(!isLocLayerActive);
+              }}
+              enabled={isLocLayerActive}
+            />
             {data?.groups?.length ? (
               <Select
                 mt={4}
@@ -193,13 +205,18 @@ export default function Component(props: SpeciesComponentProps) {
   );
 }
 
-function LocationProbability() {
+function LocationProbability(props: {
+  onToggle: () => void;
+  enabled: boolean;
+}) {
+  const { onToggle, enabled } = props;
   return (
     <Flex direction='column' gap={4}>
       <DataSectionHead
         title='Location Probability'
         unit='%'
-        // onToggle={console.log}
+        onToggle={onToggle}
+        checked={enabled}
       />
       <LegendBar stops={getColorLegend()} labels={['Less', 'More']} />
     </Flex>

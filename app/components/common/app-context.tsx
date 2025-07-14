@@ -24,6 +24,8 @@ interface SpeciesContextProps {
   >;
   destineYear: number | undefined;
   setDestineYear: React.Dispatch<React.SetStateAction<number | undefined>>;
+  isLocLayerActive: boolean;
+  setLocLayerActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface AppContextProps {
@@ -51,6 +53,7 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
     null
   );
   const [destineYear, setDestineYear] = useState<number>();
+  const [isLocLayerActive, setLocLayerActive] = useState<boolean>(true);
 
   const speciesContextValue = {
     group: speciesGroup,
@@ -58,7 +61,9 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
     destineLayer,
     setDestineLayer,
     destineYear,
-    setDestineYear
+    setDestineYear,
+    isLocLayerActive,
+    setLocLayerActive
   };
 
   useLayoutEffect(() => {
