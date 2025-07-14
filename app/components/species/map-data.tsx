@@ -14,7 +14,8 @@ import { MapLoadingIndicator } from '$components/common/map-loading-indicator';
 
 export function SpeciesPDF() {
   const { id } = useParams<{ id: string }>();
-  const { group, destineLayer, destineYear } = useSpeciesContext();
+  const { group, destineLayer, destineYear, isLocLayerActive } =
+    useSpeciesContext();
   const map = useMap();
 
   const { data } = useQuery<Species>({
@@ -53,17 +54,18 @@ export function SpeciesPDF() {
       return [];
     }
 
-    const speciesGlLayer = rawArrowData?.table
-      ? [
-          new GeoArrowSolidPolygonLayer({
-            id: `geoarrow-species-polygons-${group.id}`,
-            data: rawArrowData.table,
-            getPolygon: rawArrowData.table.getChild('geometry')!,
-            _normalize: false,
-            getFillColor: rawArrowData.table.getChild('color')!
-          })
-        ]
-      : [];
+    const speciesGlLayer =
+      rawArrowData?.table && isLocLayerActive
+        ? [
+            new GeoArrowSolidPolygonLayer({
+              id: `geoarrow-species-polygons-${group.id}`,
+              data: rawArrowData.table,
+              getPolygon: rawArrowData.table.getChild('geometry')!,
+              _normalize: false,
+              getFillColor: rawArrowData.table.getChild('color')!
+            })
+          ]
+        : [];
 
     const destineGlLayer =
       destineLayer && destineYear && destineArrowData?.table
@@ -87,7 +89,14 @@ export function SpeciesPDF() {
         : [];
 
     return [...destineGlLayer, ...speciesGlLayer];
-  }, [rawArrowData, destineArrowData, group?.id, destineLayer, destineYear]);
+  }, [
+    rawArrowData,
+    destineArrowData,
+    group?.id,
+    destineLayer,
+    destineYear,
+    isLocLayerActive
+  ]);
 
   return (
     <>
