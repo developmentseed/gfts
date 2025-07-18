@@ -72,3 +72,6 @@ tmp
 .tmp
 dist
 parcel-bundle-reports
+
+
+deploy/secrets
