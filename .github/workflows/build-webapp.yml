@@ -1,5 +1,4 @@
-name: Deploy webapp
-concurrency: deploy
+name: Webapp
 
 on:
   workflow_dispatch:
