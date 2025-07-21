@@ -1,6 +1,6 @@
 FROM node:24-alpine AS builder
 
-ARG WEBAPP_URL="https://gfts.developmentseed.org"
+ARG WEBAPP_URL="https://gfts.destine.eu"
 ARG MAPBOX_TOKEN=""
 ARG GITHUB_TOKEN=""
 
