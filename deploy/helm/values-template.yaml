@@ -31,7 +31,7 @@ oauth2-proxy:
     pathType: Prefix
     path: /oauth2
     hosts:
-      - gfts.developmentseed.org
+      - gfts.destine.eu
   config:
     clientID: "gfts-bearer"
     clientSecret: "${OAUTH2_PROXY_CLIENT_SECRET}"
@@ -41,8 +41,8 @@ oauth2-proxy:
     type: redis
   extraArgs:
     provider: keycloak-oidc
-    oidc-issuer-url: "https://iam.ivv.desp.space/realms/desp"
-    whitelist-domain: gfts.developmentseed.org
+    oidc-issuer-url: "https://auth.destine.eu/realms/desp"
+    whitelist-domain: gfts.destine.eu
     scope: openid
     insecure-oidc-allow-unverified-email: true
     email-domain: "*"
@@ -57,14 +57,14 @@ ingress:
   className: webapp-nginx
   annotations:
     nginx.ingress.kubernetes.io/auth-url: "http://webapp-oauth2-proxy.webapp.svc.cluster.local/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "https://gfts.developmentseed.org/oauth2/start"
+    nginx.ingress.kubernetes.io/auth-signin: "https://gfts.destine.eu/oauth2/start"
 
     cert-manager.io/cluster-issuer: "letsencrypt"
   tls:
     enabled: true
     secretName: webapp-tls
   hosts:
-    - host: gfts.developmentseed.org
+    - host: gfts.destine.eu
       paths:
         - path: /
           pathType: ImplementationSpecific
