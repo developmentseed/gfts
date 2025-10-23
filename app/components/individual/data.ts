@@ -58,7 +58,6 @@ export function requestIndividualArrowFn(id: string) {
       new Worker(
         new URL(
           '../../utils/data/healpix-arrow-individual.worker.ts',
-          // @ts-expect-error - This is a dynamic import.
           import.meta.url
         ),
         {
