@@ -170,10 +170,8 @@ expose(async (url: string, nside: number) => {
     ['temperature', mostProbTemperatureArrow]
   ]);
 
-  // @ts-expect-error structData type error
   const [structPrep, structBuffArray] = worker.preparePostMessage(struct);
   const [mostProbStructPrep, mostProbStructBuffArray] =
-    // @ts-expect-error structData type error
     worker.preparePostMessage(mostProbStruct);
 
   // eslint-disable-next-line no-console

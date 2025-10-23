@@ -73,7 +73,7 @@ function sphericalToLatLon({ theta, phi }: { theta: number; phi: number }) {
   // Convert phi (azimuthal angle) to longitude.
   let lon = rad2Deg(phi);
   // Adjust longitude to be in range [-180, 180]
-  if (lon > 180) lon -= 360;
+  while (lon > 180) lon -= 360;
   return [lon, lat];
 }
 
