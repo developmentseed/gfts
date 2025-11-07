@@ -19,9 +19,7 @@ service:
 oauth2Proxy:
   enabled: true
 
-global:
-  redis:
-    password: "${OAUTH2_PROXY_REDIS_SECRET}"
+
 
 oauth2-proxy:
   namespaceOverride: webapp
@@ -37,8 +35,30 @@ oauth2-proxy:
     clientSecret: "${OAUTH2_PROXY_CLIENT_SECRET}"
   redis:
     enabled: true
+    redisPassword: "${OAUTH2_PROXY_REDIS_SECRET}"
+    replicas: 1
+    sentinel:
+      quorum: 1
+    hardAntiAffinity: false
+    redis:
+      config:
+        min-replicas-to-write: 0
+        save: ""
+        appendonly: "no"
+    persistentVolume:
+      enabled: true
+      size: 8Gi
+    haproxy:
+      enabled: false
+    exporter:
+      enabled: false
+    sysctlImage:
+      enabled: false
   sessionStorage:
     type: redis
+    redis:
+      clientType: "standalone"
+      password: "${OAUTH2_PROXY_REDIS_SECRET}"
   extraArgs:
     provider: keycloak-oidc
     oidc-issuer-url: "https://auth.destine.eu/realms/desp"

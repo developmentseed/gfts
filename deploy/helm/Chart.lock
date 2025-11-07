@@ -1,9 +1,9 @@
 dependencies:
 - name: ingress-nginx
   repository: https://kubernetes.github.io/ingress-nginx
-  version: 4.12.3
+  version: 4.12.8
 - name: oauth2-proxy
   repository: https://oauth2-proxy.github.io/manifests
-  version: 7.12.18
-digest: sha256:e416ac01accf3929752dcb41a68e61a980484f3b1c5efdd1a794bf21579740b2
-generated: "2025-06-19T16:04:57.371465834+02:00"
+  version: 8.3.2
+digest: sha256:776d96cd299df0301793bdf7277df3fbb431334c8afe5af9d9135590ab909bd3
+generated: "2025-11-07T09:40:43.769642785+01:00"
